@@ -1,0 +1,36 @@
+//Colors
+
+// Transitions
+$ff-main: "Montserrat", sans-serif;
+$ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.55);
+$transition-350: all 350ms $ease-out;
+$transition-250: all 250ms $ease-out;
+$transition-150: all 150ms $ease-out;
+$box-shadow: rgba(0, 0, 0, 0.473) 1px 3px 30px -15px;
+$clr-pink: rgba(172, 73, 106, 0.877);
+$task-error: #a15551;
+
+// Mixins
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5.5px;
+    background-color: rgba(#797979, 0.5);
+    &:hover {
+      background: rgba(#797979, 0.65);
+    }
+    &:active {
+      background: rgba(#797979, 0.8);
+    }
+  }
+}

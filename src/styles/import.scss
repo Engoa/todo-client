@@ -1,0 +1,14 @@
+@import "~include-media/dist/include-media";
+@import "./variables.scss";
+@import "./reset.scss";
+
+$breakpoints: (
+  "sm": 20.25em,
+  "md": 60em,
+  "lg": 75em,
+  "xl": 80em,
+  "mobile": 960px,
+  "max": 1920px,
+  "inner-max": 1470px,
+  "maxer": 2240px,
+);

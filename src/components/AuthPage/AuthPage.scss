@@ -1,0 +1,83 @@
+@import "../../styles/import.scss";
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 2rem;
+    width: 450px;
+    height: 550px;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.856);
+    border-radius: 0.5rem;
+    padding: 3rem;
+    overflow-y: scroll;
+    @include scrollbar;
+  }
+
+  &__title {
+    align-self: flex-start;
+    h3 {
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+  }
+
+  &__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  &__input {
+    align-self: center;
+    width: 100%;
+    input {
+      width: 100%;
+      border-radius: 0.2rem;
+      background-color: #333333;
+      padding-left: 1rem;
+      &::placeholder {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    margin: auto;
+    button {
+      width: 100%;
+      min-height: 45px;
+      color: white;
+      text-transform: uppercase;
+      font-size: 1.05rem;
+      border-radius: 0.2rem;
+      background: #ad2027;
+    }
+  }
+  &__new {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    width: 100%;
+
+    span {
+      opacity: 0.75;
+    }
+
+    a {
+      font-weight: bold;
+    }
+  }
+}
