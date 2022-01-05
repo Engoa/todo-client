@@ -11,7 +11,7 @@
     justify-content: flex-start;
     flex-direction: column;
     gap: 2rem;
-    width: 450px;
+    width: 520px;
     min-height: 450px;
     max-height: 750px;
     margin: auto;
@@ -73,7 +73,6 @@
     justify-content: center;
     flex-direction: column;
     gap: 0.5rem;
-    height: 0%;
     transition: $transition-150;
   }
 
@@ -83,11 +82,13 @@
     justify-content: center;
     gap: 0.3rem;
     color: #ad2027;
-    p {
+
+    p,
+    span {
       width: fit-content;
       font-size: 0.8rem;
       font-weight: bold;
-      text-transform: capitalize;
+      text-transform: uppercase;
     }
   }
 

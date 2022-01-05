@@ -13,7 +13,12 @@ interface Props {
 const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
   const location = useLocation();
   const isLogin = location.pathname === "/login";
+  const isLoginError: boolean = props.userLoginErrors;
+  // const isRegisterError: boolean = props?.userErrors.length > 0;
 
+  const genRandomString = (): string => {
+    return (Math.random() + 1).toString(36).substring(7);
+  };
   return (
     <div className="auth">
       <div className="auth__content">
@@ -22,12 +27,10 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
         </div>
         {children}
         <div className="auth__errors">
-          {props.userErrors.map((error: any) => (
+          {props.userErrors?.map((error: any) => (
             <div className="auth__error">
               <span>*</span>
-              <p className="err" key={error}>
-                {error}
-              </p>
+              <p key={genRandomString + error}>{error}</p>
             </div>
           ))}
           {props.userLoginErrors && <div className="auth__error">{<span>{props.userLoginErrors}</span>}</div>}
