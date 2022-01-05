@@ -8,7 +8,6 @@ function Layout() {
   return (
     <div className="App">
       {/* <nav></nav> */}
-      <h5>{JSON.stringify(isLoggedIn)}</h5>
       {/* <header></header> */}
       {/* <main> */}
       <Outlet />

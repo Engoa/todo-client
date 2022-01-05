@@ -10,10 +10,11 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const Register: FC<Props> = ({}): JSX.Element => {
+const Register: FC<Props> = (): JSX.Element => {
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState(user);
+  const [userErrors, setUserErrors] = React.useState([]);
 
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
@@ -27,29 +28,29 @@ const Register: FC<Props> = ({}): JSX.Element => {
       setUser(res);
       navigate("/");
     } catch (err: any) {
-      console.log({ err: err.response.data.message });
+      setUserErrors(err.response.data.message);
     }
   };
 
   return (
-    <AuthPage title={"Sign Up"} new={"Sign In"}>
-      <form className="login__form">
-        <div className="login__input">
+    <AuthPage title={"Sign Up"} new={"Sign In"} userErrors={userErrors}>
+      <form className="auth__form">
+        <div className="auth__input">
           <TextField label="Email Address" onChange={handleChange("email")} type="email" />
         </div>
-        <div className="login__input">
+        <div className="auth__input">
           <TextField label="Password" onChange={handleChange("password")} type="password" />
         </div>
-        <div className="login__input">
+        <div className="auth__input">
           <TextField label="Phone Number" onChange={handleChange("phone")} type="number" />
         </div>
-        <div className="login__input">
+        <div className="auth__input">
           <TextField label="First Name" onChange={handleChange("firstName")} type="text" />
         </div>
-        <div className="login__input">
+        <div className="auth__input">
           <TextField label="Last Name" onChange={handleChange("lastName")} type="text" />
         </div>
-        <div className="login__input">
+        <div className="auth__input">
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
             <Select value={userForm.country ?? ""} onChange={handleChange("country")} label="Country">
@@ -61,7 +62,7 @@ const Register: FC<Props> = ({}): JSX.Element => {
             </Select>
           </FormControl>
         </div>
-        <div className="login__submit">
+        <div className="auth__submit">
           <Button type="submit" variant="contained" onClick={register}>
             Sign Up
           </Button>

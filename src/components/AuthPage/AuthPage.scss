@@ -1,5 +1,5 @@
 @import "../../styles/import.scss";
-.login {
+.auth {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,11 +12,12 @@
     flex-direction: column;
     gap: 2rem;
     width: 450px;
-    height: 550px;
+    min-height: 450px;
+    max-height: 750px;
     margin: auto;
-    background-color: rgba(0, 0, 0, 0.856);
+    background-color: #111114;
     border-radius: 0.5rem;
-    padding: 3rem;
+    padding: 2.5rem;
     overflow-y: scroll;
     @include scrollbar;
   }
@@ -65,12 +66,39 @@
       background: #ad2027;
     }
   }
+  &__errors {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 0%;
+    transition: $transition-150;
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    color: #ad2027;
+    p {
+      width: fit-content;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+
   &__new {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.35rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
     width: 100%;
+    font-size: 0.9rem;
 
     span {
       opacity: 0.75;
@@ -78,6 +106,16 @@
 
     a {
       font-weight: bold;
+    }
+  }
+}
+@include media("<smd") {
+  .auth {
+    all: unset;
+
+    &__content {
+      min-height: 100vh;
+      width: 100%;
     }
   }
 }
