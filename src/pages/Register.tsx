@@ -1,51 +1,59 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext } from "react";
 import arrayOfCountries from "../helpers/countries";
 import AuthPage from "../components/AuthPage/AuthPage";
-import { Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { ISignup } from "../types/User";
+import { useUserContext } from "../store/user";
+import { useNavigate } from "react-router-dom";
+import { UserService } from "../services/user.service";
 
 interface Props {
   children?: React.ReactNode;
 }
-const Register: FC<Props> = ({}): JSX.Element => {
-  const [userCountry, setUserCountry] = React.useState("");
-  const [userForm, setUserForm] = React.useState<any>({});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement> & any) => {
-    setUserForm({ ...userForm, [event.target.name]: event.target.value });
-    console.log(userForm);
+const Register: FC<Props> = ({}): JSX.Element => {
+  const navigate = useNavigate();
+  const { user, setUser } = useUserContext();
+  const [userForm, setUserForm] = React.useState(user);
+
+  const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
+    setUserForm({ ...userForm, [prop]: event.target.value });
   };
 
-  const register = () => {};
+  const register = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await UserService.signup(userForm);
+      setUser(res);
+      navigate("/");
+    } catch (err: any) {
+      console.log({ err: err.response.data.message });
+    }
+  };
 
   return (
     <AuthPage title={"Sign Up"} new={"Sign In"}>
       <form className="login__form">
         <div className="login__input">
-          <TextField label="Email Address" variant="filled" name="email" defaultValue={userForm.email} onChange={handleChange} type="email" />
+          <TextField label="Email Address" onChange={handleChange("email")} type="email" />
         </div>
         <div className="login__input">
-          <TextField label="Password" variant="filled" name="password" onChange={handleChange} type="password" />
+          <TextField label="Password" onChange={handleChange("password")} type="password" />
         </div>
         <div className="login__input">
-          <TextField label="Phone Number" variant="filled" name="phone" onChange={handleChange} type="number" />
+          <TextField label="Phone Number" onChange={handleChange("phone")} type="number" />
         </div>
         <div className="login__input">
-          <TextField label="First Name" variant="filled" name="firstName" onChange={handleChange} type="text" />
+          <TextField label="First Name" onChange={handleChange("firstName")} type="text" />
         </div>
         <div className="login__input">
-          <TextField label="Last Name" variant="filled" name="lastName" onChange={handleChange} type="text" />
+          <TextField label="Last Name" onChange={handleChange("lastName")} type="text" />
         </div>
         <div className="login__input">
           <FormControl fullWidth>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={userCountry}
-              onChange={handleChange}
-              label="Country"
-              variant="filled"
-              name="country"
-            >
+            <InputLabel id="demo-simple-select-label">Country</InputLabel>
+            <Select value={userForm.country ?? ""} onChange={handleChange("country")} label="Country">
               {arrayOfCountries.map((country) => (
                 <MenuItem key={country.code} value={country.name}>
                   {country.name}
@@ -56,7 +64,7 @@ const Register: FC<Props> = ({}): JSX.Element => {
         </div>
         <div className="login__submit">
           <Button type="submit" variant="contained" onClick={register}>
-            Sign In
+            Sign Up
           </Button>
         </div>
       </form>

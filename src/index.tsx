@@ -2,24 +2,18 @@ import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import App from "./App";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Router from "./Router";
 import reportWebVitals from "./reportWebVitals";
 import appTheme from "./theme";
 import "./styles/globals.scss";
+import { UserProvider } from "./store/user";
 
 ReactDOM.render(
-  <ThemeProvider theme={appTheme}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
-  </ThemeProvider>,
+  <UserProvider>
+    <ThemeProvider theme={appTheme}>
+      <Router />
+    </ThemeProvider>
+  </UserProvider>,
   document.getElementById("root")
 );
 

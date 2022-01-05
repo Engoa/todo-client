@@ -1,11 +1,24 @@
 import { createTheme, ThemeOptions } from "@mui/material";
+import { grey, orange } from "@mui/material/colors";
 
 const theme: ThemeOptions = {
   palette: {
     mode: "dark",
+    primary: {
+      main: grey[300],
+      dark: orange[700],
+    },
   },
   components: {
+    MuiTextField: {
+      defaultProps: {
+        variant: "filled",
+      },
+    },
     MuiSelect: {
+      defaultProps: {
+        variant: "filled",
+      },
       styleOverrides: {
         select: {
           padding: "1rem",
