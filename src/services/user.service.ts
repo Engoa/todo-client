@@ -4,8 +4,6 @@ import { ApiService } from "./api.service";
 export class UserService {
   static api = ApiService("");
 
-  constructor() {}
-
   static signup(user: IUser): Promise<IUser> {
     return this.api.post(`/auth/signup`, user).then((res) => res.data);
   }

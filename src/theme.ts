@@ -1,12 +1,12 @@
 import { createTheme, ThemeOptions } from "@mui/material";
-import { grey, orange } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 
 const theme: ThemeOptions = {
   palette: {
     mode: "dark",
     primary: {
       main: grey[300],
-      dark: orange[700],
+      dark: red[700],
     },
   },
   components: {

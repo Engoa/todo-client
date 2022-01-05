@@ -1,8 +1,7 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import arrayOfCountries from "../helpers/countries";
 import AuthPage from "../components/AuthPage/AuthPage";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { ISignup } from "../types/User";
 import { useUserContext } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
