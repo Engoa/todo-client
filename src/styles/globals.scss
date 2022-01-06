@@ -16,6 +16,7 @@ html {
   color: white;
   min-height: 100vh;
   width: 100%;
+  @include scrollbar;
 }
 
 .Layout {
@@ -74,7 +75,7 @@ select {
   align-items: center;
   justify-content: center;
   display: flex;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
   span {
     color: #ad2027 !important;
   }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Accordion, AccordionDetails, AccordionSummary, TextField, Typography } from "@mui/material";
+import React, { SyntheticEvent, useRef } from "react";
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Typography } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { TodoService } from "../../services/todo.service";
@@ -15,18 +15,22 @@ const Todo = () => {
     completed: false,
   });
   const [todos, setTodos] = React.useState<any[]>([]);
-  const [openModal, setOpenModal] = React.useState<boolean>(false);
   const { user, setUser } = useUserContext();
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    TodoService.getTodos()
-      .then((res) => {
+    try {
+      setLoading(true);
+      TodoService.getTodos().then((res) => {
         setTodos(res);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
+    }
   }, []);
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
@@ -34,22 +38,20 @@ const Todo = () => {
   };
 
   const addTodo = async () => {
-    if (!todoForm.text || !todoForm.title) return;
+    if (!todoForm.text.trim() || !todoForm.title.trim()) return;
     try {
       const res = await TodoService.addTodo(todoForm);
-      setTodos({ ...todos, ...res });
-      console.log(res);
+      setTodos([...todos, res]);
     } catch (err: any) {
       console.log(err);
     }
   };
-  const deleteTodo = async (e: any) => {
+  const deleteTodo = async (e: SyntheticEvent | any) => {
     e.stopPropagation();
     const selectedTodoID = e.currentTarget.dataset.id;
-
     try {
+      setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
       const res = await TodoService.deleteTodo(selectedTodoID);
-      setTodos({ ...todos, ...res });
       console.log(res);
     } catch (err: any) {
       console.log(err);
@@ -73,12 +75,14 @@ const Todo = () => {
           </div>
         </div>
         <div className="input--wrapper">
-          <Button onClick={addTodo}>Add Todo</Button>
+          <Button variant="contained" onClick={addTodo} disabled={!todoForm.text || !todoForm.title ? true : false}>
+            Add Todo
+          </Button>
         </div>
       </div>
-      {todos?.map((todo, index) => {
+      {todos?.map((todo) => {
         return (
-          <Accordion key={todo.text + index}>
+          <Accordion key={todo._id}>
             <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
               <div className="todos__details">
                 <div className="todos__details--title">
@@ -108,11 +112,16 @@ const Todo = () => {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{todo.text} </Typography>
+              <Typography>{todo.text}</Typography>
             </AccordionDetails>
           </Accordion>
         );
       })}
+      {loading && (
+        <div className="spinner--wrapper">
+          <CircularProgress />
+        </div>
+      )}
     </>
   );
 };
