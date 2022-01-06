@@ -33,6 +33,11 @@ const theme: ThemeOptions = {
       styleOverrides: {
         root: {
           color: "white",
+          padding: "12px",
+          ":hover": {
+            background: "rgba(255,255,255)",
+            color: "black",
+          },
         },
       },
     },
@@ -40,6 +45,8 @@ const theme: ThemeOptions = {
     MuiList: {
       styleOverrides: {
         root: {
+          overflow: "hidden",
+          padding: "0",
           borderradius: "0.2rem",
         },
       },
@@ -90,6 +97,17 @@ const theme: ThemeOptions = {
         root: {
           overflow: "hidden",
           borderTop: "2px solid #e50914",
+        },
+      },
+    },
+
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          background: "#3a3939",
+          borderRadius: "0.2rem",
+          overflow: "hidden",
+          width: "200px",
         },
       },
     },

@@ -23,8 +23,6 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
-// TODO - add a similar functio that checks if im logged in, and then render todos page
-
 const Router: React.FC = ({ children }) => {
   const { isLoggedIn } = useUserContext();
 

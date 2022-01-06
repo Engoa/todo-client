@@ -108,5 +108,16 @@
         left: -1.8rem;
       }
     }
+
+    &__update {
+      left: -5rem;
+
+      @include media("<smd") {
+        left: -3.2rem;
+      }
+    }
   }
+}
+.completed {
+  background: rgba(101, 165, 101, 0.596) !important;
 }

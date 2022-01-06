@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
 import Todos from "./components/Todos/Todos";
 import { useUserContext } from "./store/user";
 
@@ -8,8 +8,7 @@ function Layout() {
   const { user, isLoggedIn } = useUserContext();
   return (
     <div className="Layout">
-      {/* <nav></nav> */}
-      {/* <Header /> */}
+      <Navbar />
       <Todos />
       <Outlet />
       {/* </main> */}

@@ -1,14 +1,15 @@
-import React, { SyntheticEvent, useRef } from "react";
+import React, { FC, SyntheticEvent, useRef } from "react";
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Typography } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
+import DoneIcon from "@mui/icons-material/Done";
 import { TodoService } from "../../services/todo.service";
 import { Button } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import dayjs from "dayjs";
 import "./Todos.scss";
 
-const Todo = () => {
+const Todo: FC = (): JSX.Element => {
   const [todoForm, setTodoForm] = React.useState({
     text: "",
     title: "",
@@ -51,8 +52,23 @@ const Todo = () => {
     const selectedTodoID = e.currentTarget.dataset.id;
     try {
       setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
-      const res = await TodoService.deleteTodo(selectedTodoID);
-      console.log(res);
+      await TodoService.deleteTodo(selectedTodoID);
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+  const updateTodo = async (e: SyntheticEvent | any) => {
+    e.stopPropagation();
+    const selectedTodoID = e.currentTarget.dataset.id;
+    const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
+    if (!selectedTodo) return;
+    try {
+      const updatedTodo = {
+        ...selectedTodo,
+        completed: !selectedTodo.completed,
+      };
+      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+      await TodoService.updateTodo(selectedTodoID, updatedTodo);
     } catch (err: any) {
       console.log(err);
     }
@@ -68,7 +84,7 @@ const Todo = () => {
         </div>
         <div className="todos__add__inputs">
           <div className="input--wrapper">
-            <TextField label="Task title" onChange={handleChange("title")} type="text" />
+            <TextField label="The title of your task" onChange={handleChange("title")} type="text" />
           </div>
           <div className="input--wrapper">
             <TextField label="Describe your task" onChange={handleChange("text")} type="text" id="todo-text" />
@@ -82,13 +98,16 @@ const Todo = () => {
       </div>
       {todos?.map((todo) => {
         return (
-          <Accordion key={todo._id}>
+          <Accordion key={todo._id} className={todo.completed ? "completed" : ""}>
             <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
               <div className="todos__details">
                 <div className="todos__details--title">
                   <Typography>{todo.title}</Typography>
                 </div>
                 <div className="todos__details--dates">
+                  <div className="todos__details__delete todos__details__update" onClick={updateTodo} data-id={todo._id}>
+                    <DoneIcon />
+                  </div>
                   <div className="todos__details__delete" onClick={deleteTodo} data-id={todo._id}>
                     <ClearIcon />
                   </div>
@@ -98,16 +117,12 @@ const Todo = () => {
                       <span>{dayjs(todo.createdAt).format("DD/MM/YYYY")}</span>
                     </Typography>
                   </div>
-                  {todo.updatedAt !== todo.createdAt ? (
-                    <div className="todos__details--date">
-                      <Typography>
-                        <span>Last updated: </span>
-                        <span>{dayjs(todo.updatedAt).format("DD/MM/YYYY")}</span>
-                      </Typography>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                  <div className="todos__details--date">
+                    <Typography>
+                      <span>Last updated: </span>
+                      <span>{dayjs(todo.updatedAt).format("DD/MM/YYYY")}</span>
+                    </Typography>
+                  </div>
                 </div>
               </div>
             </AccordionSummary>

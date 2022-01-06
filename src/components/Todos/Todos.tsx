@@ -1,9 +1,8 @@
-import React from "react";
-import { TodoService } from "../../services/todo.service";
+import React, { FC } from "react";
 import Todo from "./Todo";
 import "./Todos.scss";
 
-const Todos = () => {
+const Todos: FC = (): JSX.Element => {
   return (
     <main className="todos__wrapper">
       <Todo />

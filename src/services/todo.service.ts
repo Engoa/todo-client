@@ -13,7 +13,7 @@ export class TodoService {
   static deleteTodo(id: ITodo): Promise<ITodo> {
     return this.api.delete(`/todos/${id}`).then((res) => res.data);
   }
-  static updateTodo(id: ITodo): Promise<ITodo> {
-    return this.api.patch("/todos", id).then((res) => res.data);
+  static updateTodo(id: ITodo, todo: ITodo): Promise<ITodo> {
+    return this.api.patch(`/todos/${id}`, todo).then((res) => res.data);
   }
 }
