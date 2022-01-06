@@ -1,5 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Todos from "./components/Todos/Todos";
 import { useUserContext } from "./store/user";
 
 function Layout() {
@@ -7,10 +9,8 @@ function Layout() {
   return (
     <div className="Layout">
       {/* <nav></nav> */}
-      {/* <header></header> */}
-      {/* <main> */}
-      {/* <h5>hello</h5> */}
-
+      {/* <Header /> */}
+      <Todos />
       <Outlet />
       {/* </main> */}
       {/* <footer></footer> */}

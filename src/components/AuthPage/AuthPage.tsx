@@ -33,7 +33,7 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
               <p key={genRandomString + error + index}>{error}</p>
             </div>
           ))}
-          {props.userLoginErrors && <div className="auth__error">{<span>{props?.userLoginErrors}</span>}</div>}
+          {props?.userLoginErrors && <div className="auth__error">{<span>{props?.userLoginErrors}</span>}</div>}
         </div>
 
         <div className="auth__new">

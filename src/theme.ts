@@ -49,8 +49,10 @@ const theme: ThemeOptions = {
       styleOverrides: {
         root: {
           background: "#e50914",
+          color: "white",
           ":hover": {
             background: "#ad2027",
+            color: "black",
           },
         },
       },
@@ -69,6 +71,25 @@ const theme: ThemeOptions = {
           "&.Mui-focused": {
             color: "#e50914",
           },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          background: "#3a3939",
+          borderRadius: "0.2rem !important",
+          overflow: "hidden",
+          width: "100%",
+        },
+      },
+    },
+
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          overflow: "hidden",
+          borderTop: "2px solid #e50914",
         },
       },
     },

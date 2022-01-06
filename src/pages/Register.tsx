@@ -30,7 +30,7 @@ const Register: FC<Props> = (): JSX.Element => {
       setUser(res);
       navigate("/");
     } catch (err: any) {
-      setUserErrors(err.response.data.message);
+      setUserErrors(err?.response.data.message);
     } finally {
       setTimeout(() => {
         setLoading(false);

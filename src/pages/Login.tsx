@@ -26,7 +26,7 @@ const Login = (): JSX.Element => {
       setUser(res);
       navigate("/");
     } catch (err: any) {
-      setUserLoginErrors(err.response.data.message);
+      setUserLoginErrors(err?.response.data.message);
       passwordRef.current!.value = "";
     } finally {
       setTimeout(() => {

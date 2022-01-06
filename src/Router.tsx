@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, Link, Navigate, useLocation } from "react-router-dom";
+import Todos from "./components/Todos/Todos";
 import Layout from "./Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -18,12 +19,17 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   else if (isLoggedIn && checkRoute(location.pathname)) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
+  if (isLoggedIn) {
+    return <Layout />;
+  }
   return children;
 };
 
 // TODO - add a similar functio that checks if im logged in, and then render todos page
 
 const Router: React.FC = ({ children }) => {
+  const { isLoggedIn } = useUserContext();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -35,8 +41,6 @@ const Router: React.FC = ({ children }) => {
             </RequireAuth>
           }
         >
-          {/* <Route path="/" element={<Todos />} /> */}
-
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           {children}
