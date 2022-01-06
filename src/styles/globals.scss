@@ -52,3 +52,17 @@ select {
     font-family: $ff-main;
   }
 }
+.spinner--wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  backdrop-filter: blur(3px);
+  span {
+    color: #ad2027 !important;
+  }
+}

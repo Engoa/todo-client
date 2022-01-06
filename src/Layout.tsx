@@ -1,4 +1,3 @@
-import { Snackbar } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useUserContext } from "./store/user";
@@ -11,10 +10,10 @@ function Layout() {
       {/* <header></header> */}
       {/* <main> */}
       {/* <h5>hello</h5> */}
+
       <Outlet />
       {/* </main> */}
       {/* <footer></footer> */}
-      {/* <Snackbar open={open} autoHideDuration={6000} message="Note archived" /> */}
     </div>
   );
 }

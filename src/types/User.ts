@@ -5,6 +5,7 @@ export type IUser = {
   lastName?: string;
   country?: string;
   accessToken?: string;
+  password?: string;
 };
 export type ISignup = {
   password?: string;
