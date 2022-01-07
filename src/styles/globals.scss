@@ -17,7 +17,9 @@ html {
   min-height: 100vh;
   width: 100%;
   @include scrollbar;
-  overflow-y: scroll;
+  @include media(">md") {
+    overflow-y: scroll;
+  }
 }
 
 .Layout {
