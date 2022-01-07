@@ -1,5 +1,5 @@
-import React, { FC, SyntheticEvent } from "react";
-import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Typography } from "@mui/material";
+import React, { FC, HtmlHTMLAttributes, SyntheticEvent, useRef } from "react";
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Tooltip, Typography, Zoom } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
@@ -61,7 +61,7 @@ const Todo: FC = (): JSX.Element => {
         completed: !selectedTodo.completed,
       };
       setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
-      await TodoService.updateTodo(selectedTodoID, updatedTodo);
+      await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
     } catch (err: any) {
       console.log(err);
     }
@@ -100,13 +100,19 @@ const Todo: FC = (): JSX.Element => {
                 <div className="todos__details--dates">
                   <div className="todos__actions">
                     <div className="todos__actions__update action" onClick={() => finishTodo(todo._id)}>
-                      <DoneIcon />
+                      <Tooltip title="Finish" TransitionComponent={Zoom} placement="left" arrow>
+                        <DoneIcon />
+                      </Tooltip>
                     </div>
                     <div className="todos__actions__delete action" onClick={() => deleteTodo(todo._id)}>
-                      <ClearIcon />
+                      <Tooltip title="Delete" TransitionComponent={Zoom} placement="top" arrow>
+                        <ClearIcon />
+                      </Tooltip>
                     </div>
                     <div className="todos__actions__edit action">
-                      <EditIcon />
+                      <Tooltip title="Edit" TransitionComponent={Zoom} placement="right" arrow>
+                        <EditIcon />
+                      </Tooltip>
                     </div>
                   </div>
                   <div className="todos__details--date">
@@ -125,7 +131,7 @@ const Todo: FC = (): JSX.Element => {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{todo.text}</Typography>
+              <p>{todo.text}</p>
             </AccordionDetails>
           </Accordion>
         );

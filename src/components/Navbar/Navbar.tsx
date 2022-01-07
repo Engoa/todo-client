@@ -9,7 +9,9 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
-import axios from "axios";
+import "./Navbar.scss";
+import { Link } from "react-router-dom";
+import { logout } from "../../helpers/utils";
 
 const Navbar = () => {
   const { user, isLoggedIn } = useUserContext();
@@ -22,13 +24,8 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    window.location.reload();
-    localStorage.removeItem("user");
-  };
-
   return (
-    <>
+    <div className="nav">
       <Box
         sx={{
           display: "flex",
@@ -37,10 +34,9 @@ const Navbar = () => {
           width: "100%",
           justifyContent: "flex-end",
           overflow: "hidden",
-          padding: "0 1rem",
         }}
       >
-        <Tooltip title="Account">
+        <Tooltip title="Account" arrow>
           <IconButton
             onClick={handleClick}
             size="small"
@@ -64,19 +60,13 @@ const Navbar = () => {
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 33,
-              height: 33,
-              ml: -0.5,
-              mr: 1,
-            },
+            mt: 1,
             "&:before": {
               content: '""',
               display: "block",
               position: "absolute",
               top: 0,
-              right: 17,
+              right: 14,
               width: 10,
               height: 10,
               bgcolor: "#e0e0e0",
@@ -88,12 +78,14 @@ const Navbar = () => {
         transformOrigin={{ horizontal: "left", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          User Settings
-        </MenuItem>
+        <Link to={"/profile"}>
+          <MenuItem>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            User Settings
+          </MenuItem>
+        </Link>
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
@@ -101,7 +93,7 @@ const Navbar = () => {
           Logout
         </MenuItem>
       </Menu>
-    </>
+    </div>
   );
 };
 

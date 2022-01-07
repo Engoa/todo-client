@@ -5,3 +5,8 @@ export const str2bool = (value: string | boolean) => {
   }
   return value;
 };
+
+export const logout = () => {
+  window.location.reload();
+  localStorage.removeItem("user");
+};

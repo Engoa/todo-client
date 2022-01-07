@@ -7,13 +7,15 @@ import { useUserContext } from "./store/user";
 function Layout() {
   const { user, isLoggedIn } = useUserContext();
   return (
-    <div className="Layout">
+    <>
       <Navbar />
-      <Todos />
-      <Outlet />
-      {/* </main> */}
-      {/* <footer></footer> */}
-    </div>
+      <div className="Layout">
+        <Todos />
+        <Outlet />
+        {/* </main> */}
+        {/* <footer></footer> */}
+      </div>
+    </>
   );
 }
 

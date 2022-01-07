@@ -1,1 +1,9 @@
 @import "../../styles/import.scss";
+
+.nav {
+  width: 100%;
+  padding: 1rem;
+  @include media("<smd") {
+    margin-bottom: 2rem;
+  }
+}
