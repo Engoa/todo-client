@@ -96,8 +96,16 @@ const theme: ThemeOptions = {
     MuiAccordionDetails: {
       styleOverrides: {
         root: {
+          overflowWrap: "anywhere",
           overflow: "hidden",
           borderTop: "2px solid #e50914",
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          height: "90px",
         },
       },
     },
