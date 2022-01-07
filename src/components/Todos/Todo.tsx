@@ -17,16 +17,13 @@ const Todo: FC = (): JSX.Element => {
     completed: false,
   });
   const [todos, setTodos] = React.useState<any[]>([]);
-  // const [updatedTodoText, setUpdatedTodoText] = React.useState<string>("");
   const { user, setUser } = useUserContext();
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
     try {
-      TodoService.getTodos().then((res) => {
-        setTodos(res);
-      });
+      TodoService.getTodos().then(setTodos);
     } catch (err) {
       console.log(err);
     } finally {
@@ -35,11 +32,11 @@ const Todo: FC = (): JSX.Element => {
   }, []);
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
-    setTodoForm({ ...todoForm, [key]: event.target.value.trim() });
+    setTodoForm({ ...todoForm, [key]: event.target.value });
   };
 
   const addTodo = async () => {
-    if (!todoForm.text.trim() || !todoForm.title.trim()) return;
+    if (!todoForm.text || !todoForm.title) return;
     try {
       const res = await TodoService.addTodo(todoForm);
       setTodos([...todos, res]);
@@ -47,9 +44,7 @@ const Todo: FC = (): JSX.Element => {
       console.log(err);
     }
   };
-  const deleteTodo = async (e: SyntheticEvent | any) => {
-    e.stopPropagation();
-    const selectedTodoID = e.currentTarget.dataset.id;
+  const deleteTodo = async (selectedTodoID: string) => {
     try {
       setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
       await TodoService.deleteTodo(selectedTodoID);
@@ -57,9 +52,7 @@ const Todo: FC = (): JSX.Element => {
       console.log(err);
     }
   };
-  const finishTodo = async (e: SyntheticEvent | any) => {
-    e.stopPropagation();
-    const selectedTodoID = e.currentTarget.dataset.id;
+  const finishTodo = async (selectedTodoID: string) => {
     const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
     if (!selectedTodo) return;
     try {
@@ -73,23 +66,6 @@ const Todo: FC = (): JSX.Element => {
       console.log(err);
     }
   };
-
-  // const updateTodo = async (e: SyntheticEvent | any) => {
-  //   e.stopPropagation();
-  //   const selectedTodoID = e.currentTarget.dataset.id;
-  //   const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
-  //   if (!selectedTodo) return;
-  //   try {
-  //     const updatedTodo = {
-  //       ...selectedTodo,
-  //       text: setUpdatedTodoText(e.target.value),
-  //     };
-  //     setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
-  //     await TodoService.updateTodo(selectedTodoID, updatedTodo);
-  //   } catch (err: any) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <>
@@ -123,13 +99,13 @@ const Todo: FC = (): JSX.Element => {
                 </div>
                 <div className="todos__details--dates">
                   <div className="todos__actions">
-                    <div className="todos__actions__update action" onClick={finishTodo} data-id={todo._id}>
+                    <div className="todos__actions__update action" onClick={() => finishTodo(todo._id)}>
                       <DoneIcon />
                     </div>
-                    <div className="todos__actions__delete action" onClick={deleteTodo} data-id={todo._id}>
+                    <div className="todos__actions__delete action" onClick={() => deleteTodo(todo._id)}>
                       <ClearIcon />
                     </div>
-                    <div className="todos__actions__edit action" data-id={todo._id}>
+                    <div className="todos__actions__edit action">
                       <EditIcon />
                     </div>
                   </div>
