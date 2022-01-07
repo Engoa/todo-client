@@ -1,8 +1,9 @@
-import React, { FC, SyntheticEvent, useRef } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Typography } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
+import EditIcon from "@mui/icons-material/Edit";
 import { TodoService } from "../../services/todo.service";
 import { Button } from "@mui/material";
 import { useUserContext } from "../../store/user";
@@ -16,21 +17,20 @@ const Todo: FC = (): JSX.Element => {
     completed: false,
   });
   const [todos, setTodos] = React.useState<any[]>([]);
+  // const [updatedTodoText, setUpdatedTodoText] = React.useState<string>("");
   const { user, setUser } = useUserContext();
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setLoading(true);
     try {
-      setLoading(true);
       TodoService.getTodos().then((res) => {
         setTodos(res);
       });
     } catch (err) {
       console.log(err);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 800);
+      setLoading(false);
     }
   }, []);
 
@@ -57,7 +57,7 @@ const Todo: FC = (): JSX.Element => {
       console.log(err);
     }
   };
-  const updateTodo = async (e: SyntheticEvent | any) => {
+  const finishTodo = async (e: SyntheticEvent | any) => {
     e.stopPropagation();
     const selectedTodoID = e.currentTarget.dataset.id;
     const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
@@ -73,6 +73,23 @@ const Todo: FC = (): JSX.Element => {
       console.log(err);
     }
   };
+
+  // const updateTodo = async (e: SyntheticEvent | any) => {
+  //   e.stopPropagation();
+  //   const selectedTodoID = e.currentTarget.dataset.id;
+  //   const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
+  //   if (!selectedTodo) return;
+  //   try {
+  //     const updatedTodo = {
+  //       ...selectedTodo,
+  //       text: setUpdatedTodoText(e.target.value),
+  //     };
+  //     setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+  //     await TodoService.updateTodo(selectedTodoID, updatedTodo);
+  //   } catch (err: any) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <>
@@ -98,28 +115,33 @@ const Todo: FC = (): JSX.Element => {
       </div>
       {todos?.map((todo) => {
         return (
-          <Accordion key={todo._id} className={todo.completed ? "completed" : ""}>
+          <Accordion key={todo._id} className={todo.completed ? "completed" : "todo"}>
             <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
               <div className="todos__details">
                 <div className="todos__details--title">
                   <Typography>{todo.title}</Typography>
                 </div>
                 <div className="todos__details--dates">
-                  <div className="todos__details__delete todos__details__update" onClick={updateTodo} data-id={todo._id}>
-                    <DoneIcon />
-                  </div>
-                  <div className="todos__details__delete" onClick={deleteTodo} data-id={todo._id}>
-                    <ClearIcon />
+                  <div className="todos__actions">
+                    <div className="todos__actions__update action" onClick={finishTodo} data-id={todo._id}>
+                      <DoneIcon />
+                    </div>
+                    <div className="todos__actions__delete action" onClick={deleteTodo} data-id={todo._id}>
+                      <ClearIcon />
+                    </div>
+                    <div className="todos__actions__edit action" data-id={todo._id}>
+                      <EditIcon />
+                    </div>
                   </div>
                   <div className="todos__details--date">
                     <Typography>
-                      <span>Created at: </span>
+                      <span>Created: </span>
                       <span>{dayjs(todo.createdAt).format("DD/MM/YYYY")}</span>
                     </Typography>
                   </div>
                   <div className="todos__details--date">
                     <Typography>
-                      <span>Last updated: </span>
+                      <span>Updated: </span>
                       <span>{dayjs(todo.updatedAt).format("DD/MM/YYYY")}</span>
                     </Typography>
                   </div>

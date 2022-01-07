@@ -26,9 +26,20 @@ const Navbar = () => {
     window.location.reload();
     localStorage.removeItem("user");
   };
+
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center", width: "100%", justifyContent: "flex-end", overflow: "hidden" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+          width: "100%",
+          justifyContent: "flex-end",
+          overflow: "hidden",
+          padding: "0 1rem",
+        }}
+      >
         <Tooltip title="Account">
           <IconButton
             onClick={handleClick}
@@ -38,7 +49,7 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 30, height: 30 }}>{user.firstName?.slice(0, 1)}</Avatar>
+            <Avatar sx={{ width: 30, height: 30 }}>{user.firstName?.slice(0, 1).toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -65,16 +76,16 @@ const Navbar = () => {
               display: "block",
               position: "absolute",
               top: 0,
-              right: 14,
+              right: 17,
               width: 10,
               height: 10,
-              bgcolor: "#fff",
+              bgcolor: "#e0e0e0",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        transformOrigin={{ horizontal: "left", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>

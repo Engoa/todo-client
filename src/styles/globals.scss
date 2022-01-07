@@ -79,3 +79,23 @@ select {
     color: #ad2027 !important;
   }
 }
+
+.MuiList-root .MuiMenuItem-root {
+  .MuiListItemIcon-root {
+    svg {
+      will-change: color;
+      * {
+        transition: $transition-250;
+      }
+    }
+  }
+  &:hover {
+    .MuiListItemIcon-root {
+      svg {
+        * {
+          fill: black;
+        }
+      }
+    }
+  }
+}

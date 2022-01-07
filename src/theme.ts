@@ -34,6 +34,7 @@ const theme: ThemeOptions = {
         root: {
           color: "white",
           padding: "12px",
+          transition: "all 250ms ease",
           ":hover": {
             background: "rgba(255,255,255)",
             color: "black",

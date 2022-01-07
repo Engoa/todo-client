@@ -5,6 +5,8 @@ import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, Te
 import { useUserContext } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
+import { registerScheme } from "../schemes/authSchemes";
+import yup from "yup";
 
 interface Props {
   children?: React.ReactNode;
@@ -14,7 +16,7 @@ const Register: FC<Props> = (): JSX.Element => {
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState(user);
-  const [userErrors, setUserErrors] = React.useState([]);
+  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
   const [loading, setLoading] = React.useState(false);
 
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
@@ -23,18 +25,19 @@ const Register: FC<Props> = (): JSX.Element => {
 
   const register = async (e: any) => {
     e.preventDefault();
-    if (!userForm.email || !userForm.password || !userForm.firstName || !userForm.lastName || !userForm.country) return;
+    const isValid = await registerScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
+    if (Array.isArray(isValid)) return setUserErrors([isValid as any]);
+    // If not valid return and show errors.
     try {
       setLoading(true);
       const res = await UserService.signup(userForm);
+      console.log(res);
       setUser(res);
       navigate("/");
     } catch (err: any) {
-      setUserErrors(err?.response.data.message);
+      console.log(err.response.data.message);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 600);
+      setLoading(false);
     }
   };
 
@@ -43,19 +46,19 @@ const Register: FC<Props> = (): JSX.Element => {
       <AuthPage title={"Sign Up"} new={"Sign In"} userErrors={userErrors}>
         <form className="auth__form">
           <div className="auth__input">
-            <TextField label="Email Address" onChange={handleChange("email")} type="email" autoComplete="true" />
+            <TextField label="Email Address" onChange={handleChange("email")} type="email" autoComplete="email" />
           </div>
           <div className="auth__input">
-            <TextField label="Password" onChange={handleChange("password")} type="password" autoComplete="true" />
+            <TextField label="Password" onChange={handleChange("password")} type="password" autoComplete="new-password" />
           </div>
           <div className="auth__input">
-            <TextField label="Phone Number" onChange={handleChange("phone")} type="number" autoComplete="true" />
+            <TextField label="Phone Number" onChange={handleChange("phone")} type="number" autoComplete="tel" />
           </div>
           <div className="auth__input">
-            <TextField label="First Name" onChange={handleChange("firstName")} type="text" autoComplete="true" />
+            <TextField label="First Name" onChange={handleChange("firstName")} type="text" autoComplete="given-name" />
           </div>
           <div className="auth__input">
-            <TextField label="Last Name" onChange={handleChange("lastName")} type="text" autoComplete="true" />
+            <TextField label="Last Name" onChange={handleChange("lastName")} type="text" autoComplete="family-name" />
           </div>
           <div className="auth__input">
             <FormControl fullWidth>

@@ -6,18 +6,13 @@ import "./AuthPage.scss";
 interface Props {
   title: string;
   new: string;
-  userErrors?: any;
-  userLoginErrors?: any;
+  userErrors: any;
 }
 
 const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
   const location = useLocation();
   const isLogin = location.pathname === "/login";
-  const isAuthPages = location.pathname === "/login" || location.pathname === "/register";
 
-  const genRandomString = (): string => {
-    return (Math.random() + 1).toString(36).substring(7);
-  };
   return (
     <div className="auth">
       <div className="auth__content">
@@ -27,13 +22,12 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
         {children}
 
         <div className="auth__errors">
-          {props?.userErrors?.map((error: any, index: number) => (
-            <div className="auth__error">
+          {props.userErrors.map((error: string, index: number) => (
+            <div className="auth__error" key={index}>
               <span>*</span>
-              <p key={genRandomString + error + index}>{error}</p>
+              <p>{error}</p>
             </div>
           ))}
-          {props?.userLoginErrors && <div className="auth__error">{<span>{props?.userLoginErrors}</span>}</div>}
         </div>
 
         <div className="auth__new">
