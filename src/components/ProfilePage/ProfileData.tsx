@@ -24,24 +24,30 @@ const ProfileData: FC = (): JSX.Element => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
   };
 
+  const difference = (object: Object, base: Object) => {
+    function changes(object, base) {
+      return _.transform(object, function (result, value, key) {
+        if (!_.isEqual(value, base[key])) {
+          result[key] = _.isObject(value) && _.isObject(base[key]) ? changes(value, base[key]) : value;
+        }
+      });
+    }
+    return changes(object, base);
+  };
   const updateUser = async () => {
     const isValid = await updateUserScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
     try {
       setLoading(true);
-      const updatedUser = {
-        ...user,
-        firstName: userForm.firstName,
-        lastName: userForm.lastName,
-        email: userForm.email,
-      };
-      await UserService.updateUser(user._id, updatedUser);
+      const updatedFields = difference(userForm, user);
+      await UserService.updateUser(user._id, updatedFields);
+      const updatedUser = Object.assign(user, updatedFields);
       setUser(updatedUser);
       setUserErrors(["User updated successfully"]);
     } catch (err: any) {
       console.log(err);
-      setUserErrors([...userErrors, err.response.data.message]);
+      setUserErrors([err.response.data.message]);
     } finally {
       setLoading(false);
     }

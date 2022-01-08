@@ -31,7 +31,7 @@ const Login = (): JSX.Element => {
       navigate("/");
     } catch (err: any) {
       console.log(err.response.data.message);
-      setUserErrors([...userErrors, err.response.data.message]);
+      setUserErrors([err.response.data.message]);
     } finally {
       setLoading(false);
     }
