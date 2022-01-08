@@ -9,6 +9,9 @@ import { Button } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import dayjs from "dayjs";
 import "./Todos.scss";
+import { useTodosContext } from "../../store/todos";
+import { ITodo } from "../../types/Todo";
+import { useLoaderContext } from "../../store/loader";
 
 const Todo: FC = (): JSX.Element => {
   const [todoForm, setTodoForm] = React.useState({
@@ -16,9 +19,9 @@ const Todo: FC = (): JSX.Element => {
     title: "",
     completed: false,
   });
-  const [todos, setTodos] = React.useState<any[]>([]);
   const { user, setUser } = useUserContext();
-  const [loading, setLoading] = React.useState(false);
+  const { todos, setTodos, addTodo, finishTodo, deleteTodo } = useTodosContext();
+  const { loading, setLoading } = useLoaderContext();
 
   React.useEffect(() => {
     setLoading(true);
@@ -33,38 +36,6 @@ const Todo: FC = (): JSX.Element => {
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setTodoForm({ ...todoForm, [key]: event.target.value });
-  };
-
-  const addTodo = async () => {
-    if (!todoForm.text || !todoForm.title) return;
-    try {
-      const res = await TodoService.addTodo(todoForm);
-      setTodos([...todos, res]);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-  const deleteTodo = async (selectedTodoID: string) => {
-    try {
-      setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
-      await TodoService.deleteTodo(selectedTodoID);
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-  const finishTodo = async (selectedTodoID: string) => {
-    const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
-    if (!selectedTodo) return;
-    try {
-      const updatedTodo = {
-        ...selectedTodo,
-        completed: !selectedTodo.completed,
-      };
-      await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
-      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
-    } catch (err: any) {
-      console.log(err);
-    }
   };
 
   return (
@@ -84,12 +55,12 @@ const Todo: FC = (): JSX.Element => {
           </div>
         </div>
         <div className="input--wrapper">
-          <Button variant="contained" onClick={addTodo} disabled={!todoForm.text || !todoForm.title ? true : false}>
+          <Button variant="contained" onClick={() => addTodo(todoForm)} disabled={!todoForm.text || !todoForm.title ? true : false}>
             Add Todo
           </Button>
         </div>
       </div>
-      {todos?.map((todo) => {
+      {todos?.map((todo: ITodo) => {
         return (
           <Accordion key={todo._id} className={todo.completed ? "completed" : "todo"}>
             <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
@@ -136,11 +107,6 @@ const Todo: FC = (): JSX.Element => {
           </Accordion>
         );
       })}
-      {loading && (
-        <div className="spinner--wrapper">
-          <CircularProgress />
-        </div>
-      )}
     </>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import Layout from "./Layout";

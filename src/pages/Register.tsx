@@ -6,6 +6,7 @@ import { useUserContext } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
 import { registerScheme } from "../schemes/authSchemes";
+import { useLoaderContext } from "../store/loader";
 
 interface Props {
   children?: React.ReactNode;
@@ -16,7 +17,7 @@ const Register: FC<Props> = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
-  const [loading, setLoading] = React.useState(false);
+  const { loading, setLoading } = useLoaderContext();
 
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
@@ -72,17 +73,12 @@ const Register: FC<Props> = (): JSX.Element => {
             </FormControl>
           </div>
           <div className="auth__submit">
-            <Button type="submit" variant="contained" onClick={register} disabled={loading ? true : false}>
+            <Button type="submit" variant="contained" onClick={register} disabled={loading}>
               Sign Up
             </Button>
           </div>
         </form>
       </AuthPage>
-      {loading && (
-        <div className="spinner--wrapper">
-          <CircularProgress />
-        </div>
-      )}
     </>
   );
 };

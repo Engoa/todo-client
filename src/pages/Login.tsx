@@ -6,12 +6,13 @@ import { UserService } from "../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { loginScheme } from "../schemes/authSchemes";
 import { IUser } from "../types/User";
+import { useLoaderContext } from "../store/loader";
 
 const Login = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const { loading, setLoading } = useLoaderContext();
 
   const navigate = useNavigate();
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
@@ -46,17 +47,12 @@ const Login = (): JSX.Element => {
             <TextField label="Password" onChange={handleChange("password")} type="password" autoComplete="current-password" />
           </div>
           <div className="auth__submit">
-            <Button type="submit" variant="contained" onClick={signIn} disabled={loading ? true : false}>
+            <Button type="submit" variant="contained" onClick={signIn} disabled={loading}>
               Sign In
             </Button>
           </div>
         </form>
       </AuthPage>
-      {loading && (
-        <div className="spinner--wrapper">
-          <CircularProgress />
-        </div>
-      )}
     </>
   );
 };
