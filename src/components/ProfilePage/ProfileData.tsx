@@ -9,6 +9,7 @@ import _ from "lodash";
 import { UserService } from "../../services/user.service";
 import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
+import { useLoaderContext } from "../../store/loader";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const ProfileData: FC = (): JSX.Element => {
   const { firstName, lastName, email } = user;
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
+  const { setLoading } = useLoaderContext();
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
@@ -27,6 +29,7 @@ const ProfileData: FC = (): JSX.Element => {
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
     try {
+      setLoading(true);
       const updatedUser = {
         ...user,
         firstName: userForm.firstName,
@@ -39,6 +42,8 @@ const ProfileData: FC = (): JSX.Element => {
     } catch (err: any) {
       console.log(err);
       setUserErrors([...userErrors, err.response.data.message]);
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -59,6 +59,9 @@
         font-size: 1.5rem;
         font-weight: bold;
         text-transform: capitalize;
+        @include media("<smd") {
+          text-align: center;
+        }
       }
       @include media("<smd") {
         svg {
