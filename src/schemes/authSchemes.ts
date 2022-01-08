@@ -21,3 +21,9 @@ export const loginScheme = yup.object().shape({
   email: yup.string().required(),
   password: yup.string().required(),
 });
+
+export const updateUserScheme = yup.object().shape({
+  email: yup.string().required().email().lowercase().max(80),
+  firstName: yup.string().required().min(2).max(55),
+  lastName: yup.string().required().min(2).max(55),
+});

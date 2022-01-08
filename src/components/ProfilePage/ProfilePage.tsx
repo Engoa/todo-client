@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import "./ProfilePage.scss";
-import { logout } from "../../helpers/utils";
 import ProfileData from "./ProfileData";
+import { UserContext } from "../../store/user";
+import "./ProfilePage.scss";
 
 const ProfilePage: FC = (): JSX.Element => {
+  const { logout } = React.useContext(UserContext);
   return (
     <div className="profile">
       <ProfileData />

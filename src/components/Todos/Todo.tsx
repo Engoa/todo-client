@@ -1,4 +1,4 @@
-import React, { FC, HtmlHTMLAttributes, SyntheticEvent, useRef } from "react";
+import React, { FC } from "react";
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Tooltip, Typography, Zoom } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -60,8 +60,8 @@ const Todo: FC = (): JSX.Element => {
         ...selectedTodo,
         completed: !selectedTodo.completed,
       };
-      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
       await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
+      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
     } catch (err: any) {
       console.log(err);
     }

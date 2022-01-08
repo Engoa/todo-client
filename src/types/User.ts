@@ -6,6 +6,7 @@ export type IUser = {
   country?: string;
   accessToken?: string;
   password?: string;
+  _id?: any;
 };
 export type ISignup = {
   password?: string;

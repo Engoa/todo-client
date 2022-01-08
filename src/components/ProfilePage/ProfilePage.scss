@@ -4,11 +4,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
   gap: 2.5rem;
   max-width: 550px;
-  padding: 0 1rem;
+  padding: 1rem;
   margin: auto;
+  height: 100vh;
 
   &__top {
     display: flex;
@@ -28,19 +28,23 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
     gap: 1rem;
+    width: 100%;
     @include media("<smd") {
       justify-content: center;
       flex-direction: column;
     }
     &--img {
-      width: 120px;
-      height: 120px;
+      width: 80px;
+      min-width: 80px;
+      min-height: 80px;
       border-radius: 5rem;
       overflow: hidden;
       outline: 2px solid rgb(255, 255, 255);
+      align-self: center;
+      display: flex;
       img {
+        border-radius: 5rem;
         width: 100%;
       }
     }
@@ -54,6 +58,7 @@
       h2 {
         font-size: 1.5rem;
         font-weight: bold;
+        text-transform: capitalize;
       }
       @include media("<smd") {
         svg {
@@ -70,8 +75,8 @@
     flex-direction: column;
     background: #3a39392a;
     width: 100%;
-    gap: 1rem;
-    border-radius: 1rem;
+    gap: 2rem;
+    border-radius: 0.5rem;
     padding: 1.5rem 2rem;
     &__item {
       display: flex;
@@ -85,25 +90,19 @@
         justify-content: flex-start;
         flex-direction: column;
         gap: 0.1rem;
-      }
-      button {
-        font-weight: bold;
-        height: 28px;
-        width: 50px !important;
-        text-transform: capitalize !important;
+        width: 100%;
+        .input--wrapper {
+          width: 100%;
+        }
       }
     }
-    &__subject {
-      font-size: 0.95rem;
-      color: #fff;
-      opacity: 0.65;
-      letter-spacing: 0.03em;
-    }
+
     &__value {
       font-size: 1.05rem;
       font-weight: bold;
       color: #fff;
       letter-spacing: 0.07em;
+      width: 100%;
     }
   }
 }

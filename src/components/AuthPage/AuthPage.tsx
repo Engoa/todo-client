@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./AuthPage.scss";
@@ -21,14 +21,14 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
         </div>
         {children}
 
-        <div className="auth__errors">
-          {props.userErrors.map((error: string, index: number) => (
-            <div className="auth__error" key={index}>
-              <span>*</span>
-              <p>{error}</p>
-            </div>
+        <ul className="auth__errors">
+          {props.userErrors.map((err: string, index: number) => (
+            <li key={index} className="auth__error">
+              {err}
+            </li>
           ))}
-        </div>
+          {console.log(props.userErrors)}
+        </ul>
 
         <div className="auth__new">
           <span>{isLogin ? "New to site?" : "Already have an account?"}</span>

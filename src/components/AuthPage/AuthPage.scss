@@ -73,6 +73,7 @@
     flex-direction: column;
     gap: 0.5rem;
     transition: $transition-150;
+    list-style-type: disc;
   }
 
   &__error {
@@ -81,14 +82,10 @@
     justify-content: center;
     gap: 0.3rem;
     color: #ad2027;
-
-    p,
-    span {
-      width: fit-content;
-      font-size: 0.8rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+    width: fit-content;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 
   &__new {

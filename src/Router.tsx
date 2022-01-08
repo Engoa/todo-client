@@ -1,6 +1,5 @@
-import { BrowserRouter, Route, Routes, Link, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
-import Todos from "./components/Todos/Todos";
 import Layout from "./Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";

@@ -9,17 +9,18 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
-import "./Navbar.scss";
 import { Link } from "react-router-dom";
-import { logout } from "../../helpers/utils";
+import "./Navbar.scss";
 
 const Navbar = () => {
-  const { user, isLoggedIn } = useUserContext();
+  const { user, logout } = useUserContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };

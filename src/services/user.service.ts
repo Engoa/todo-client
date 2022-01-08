@@ -11,4 +11,8 @@ export class UserService {
   static login(user: IUser): Promise<IUser> {
     return this.api.post(`/auth/login`, user).then((res) => res.data);
   }
+
+  static updateUser(userId: IUser, user: IUser): Promise<IUser> {
+    return this.api.patch(`/users/${userId}`, user).then((res) => res.data);
+  }
 }

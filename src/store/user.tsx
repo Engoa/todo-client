@@ -5,6 +5,7 @@ export type UserContent = {
   user: IUser;
   isLoggedIn: boolean;
   setUser: (user: IUser) => void;
+  logout: () => void;
 };
 
 export const UserContext = createContext<UserContent>({} as UserContent);
@@ -27,5 +28,10 @@ export const UserProvider: React.FC = ({ children }) => {
     return setUser(data);
   };
 
-  return <UserContext.Provider value={{ user, setUser: setToLS, isLoggedIn }}>{children}</UserContext.Provider>;
+  const logout = () => {
+    setUser({} as IUser);
+    localStorage.removeItem("user");
+  };
+
+  return <UserContext.Provider value={{ user, setUser: setToLS, logout, isLoggedIn }}>{children}</UserContext.Provider>;
 };

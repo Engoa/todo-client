@@ -6,7 +6,6 @@ import { useUserContext } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
 import { registerScheme } from "../schemes/authSchemes";
-import yup from "yup";
 
 interface Props {
   children?: React.ReactNode;
@@ -26,7 +25,7 @@ const Register: FC<Props> = (): JSX.Element => {
   const register = async (e: any) => {
     e.preventDefault();
     const isValid = await registerScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
-    if (Array.isArray(isValid)) return setUserErrors([isValid as any]);
+    if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
     try {
       setLoading(true);
