@@ -1,20 +1,21 @@
-import { CircularProgress } from "@mui/material";
 import React from "react";
+import { CircularProgress } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Todos from "./components/Todos/Todos";
 import { useLoaderContext } from "./store/loader";
+import Footer from "./components/Footer/Footer";
 
 function Layout() {
-  const { loading, setLoading } = useLoaderContext();
+  const { loading } = useLoaderContext();
   return (
     <>
       <Navbar />
       <div className="Layout">
         <Todos />
         <Outlet />
-        {/* <footer></footer> */}
-        {loading && (
+        <Footer />
+        {!loading ? null : (
           <div className="spinner--wrapper">
             <CircularProgress />
           </div>

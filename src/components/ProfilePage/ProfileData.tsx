@@ -38,6 +38,7 @@ const ProfileData: FC = (): JSX.Element => {
       setUserErrors(["User updated successfully"]);
     } catch (err: any) {
       console.log(err);
+      setUserErrors([...userErrors, err.response.data.message]);
     }
   };
 

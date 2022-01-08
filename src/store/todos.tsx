@@ -20,7 +20,7 @@ export const TodosProvider: React.FC = ({ children }) => {
     if (!todoForm.text || !todoForm.title) return;
     try {
       const res = await TodoService.addTodo(todoForm);
-      setTodos([...todos, res]);
+      setTodos([res, ...todos]);
     } catch (err: any) {
       console.log(err);
     }

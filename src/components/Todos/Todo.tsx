@@ -8,10 +8,10 @@ import { TodoService } from "../../services/todo.service";
 import { Button } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import dayjs from "dayjs";
-import "./Todos.scss";
 import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
 import { useLoaderContext } from "../../store/loader";
+import "./Todos.scss";
 
 const Todo: FC = (): JSX.Element => {
   const [todoForm, setTodoForm] = React.useState({
@@ -19,20 +19,24 @@ const Todo: FC = (): JSX.Element => {
     title: "",
     completed: false,
   });
-  const { user, setUser } = useUserContext();
+  const { user } = useUserContext();
   const { todos, setTodos, addTodo, finishTodo, deleteTodo } = useTodosContext();
-  const { loading, setLoading } = useLoaderContext();
+  const { setLoading } = useLoaderContext();
 
   React.useEffect(() => {
+    if (!todos.length) fetchTodos();
+  }, []);
+
+  const fetchTodos = async () => {
     setLoading(true);
     try {
-      TodoService.getTodos().then(setTodos);
+      await TodoService.getTodos().then(setTodos);
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setTodoForm({ ...todoForm, [key]: event.target.value });

@@ -24,13 +24,14 @@ const Login = (): JSX.Element => {
     const isValid = await loginScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await UserService.login(userForm);
       setUser(res);
       navigate("/");
     } catch (err: any) {
       console.log(err.response.data.message);
+      setUserErrors([...userErrors, err.response.data.message]);
     } finally {
       setLoading(false);
     }

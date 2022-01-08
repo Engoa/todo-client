@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import arrayOfCountries from "../helpers/countries";
 import AuthPage from "../components/AuthPage/AuthPage";
-import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useUserContext } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
@@ -31,11 +31,11 @@ const Register: FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       const res = await UserService.signup(userForm);
-      console.log(res);
       setUser(res);
       navigate("/");
     } catch (err: any) {
       console.log(err.response.data.message);
+      setUserErrors([...userErrors, err.response.data.message]);
     } finally {
       setLoading(false);
     }

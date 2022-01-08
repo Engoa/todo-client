@@ -27,7 +27,6 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
               {err}
             </li>
           ))}
-          {console.log(props.userErrors)}
         </ul>
 
         <div className="auth__new">
