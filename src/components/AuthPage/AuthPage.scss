@@ -73,8 +73,6 @@
     justify-content: center;
     flex-direction: column;
     gap: 0.5rem;
-    transition: $transition-150;
-    list-style-type: disc;
   }
 
   &__error {

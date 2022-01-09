@@ -47,7 +47,8 @@ const Todo: FC = (): JSX.Element => {
       <div className="todos__add">
         <div className="todos__user--title">
           <p>
-            Hi <span>{user.firstName},</span> you have <span>{todos.length}</span> {todos.length > 1 ? "tasks" : "task"} left to do 😊
+            Hi <span style={{ color: "red" }}>{user.firstName}</span>, you have <span style={{ color: "red" }}>{todos.length}</span>{" "}
+            {todos.length > 1 ? "tasks" : "task"} left to do 😊
           </p>
         </div>
         <div className="todos__add__inputs">

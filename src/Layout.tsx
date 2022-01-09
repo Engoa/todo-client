@@ -13,8 +13,8 @@ function Layout() {
       <Navbar />
       <div className="Layout">
         <Todos />
-        <Outlet />
         <Footer />
+        <Outlet />
         {!loading ? null : (
           <div className="spinner--wrapper">
             <CircularProgress />
