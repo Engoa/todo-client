@@ -10,14 +10,14 @@
 }
 
 body,
-html {
+html,
+#root {
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   background: linear-gradient(to top, #181820, #222227) !important;
   color: white;
   height: 100%;
   width: 100%;
-  @include scrollbar;
   @include media(">md") {
     overflow-y: scroll;
   }

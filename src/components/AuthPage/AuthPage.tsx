@@ -6,7 +6,7 @@ import "./AuthPage.scss";
 interface Props {
   title: string;
   new: string;
-  userErrors: any;
+  userErrors: Array<string>;
 }
 
 const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
@@ -15,7 +15,7 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
 
   return (
     <div className="auth">
-      <div className="auth__content">
+      <div className="auth__content" style={{ justifyContent: `${isLogin ? "center" : "flex-start"}` }}>
         <div className="auth__title">
           <h3>{props.title}</h3>
         </div>
