@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { IUser } from "../types/User";
+import { useTodosContext } from "./todos";
 
 export type UserContent = {
   user: IUser;
@@ -19,8 +20,9 @@ export const getUserFromLS = (): IUser => {
   return {} as IUser;
 };
 
-export const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC = ({ children }): JSX.Element => {
   const [user, setUser] = React.useState<IUser>(getUserFromLS() || {});
+  const { todos, setTodos } = useTodosContext();
   const isLoggedIn = !!user.email && !!user.accessToken;
 
   const setToLS = (data: Partial<IUser>) => {
@@ -31,6 +33,7 @@ export const UserProvider: React.FC = ({ children }) => {
   const logout = () => {
     setUser({} as IUser);
     localStorage.removeItem("user");
+    if (todos.length) setTodos([]);
   };
 
   return <UserContext.Provider value={{ user, setUser: setToLS, logout, isLoggedIn }}>{children}</UserContext.Provider>;

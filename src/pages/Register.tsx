@@ -3,21 +3,22 @@ import arrayOfCountries from "../helpers/countries";
 import AuthPage from "../components/AuthPage/AuthPage";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useUserContext } from "../store/user";
-import { useNavigate } from "react-router-dom";
 import { UserService } from "../services/user.service";
 import { registerScheme } from "../schemes/authSchemes";
 import { useLoaderContext } from "../store/loader";
+import { useSnackBarContext } from "../store/snackbar";
+import { capitilizeFirstLetter } from "../helpers/utils";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const Register: FC<Props> = (): JSX.Element => {
-  const navigate = useNavigate();
   const { user, setUser } = useUserContext();
+  const { loading, setLoading } = useLoaderContext();
+  const { toggleSnackBar } = useSnackBarContext();
   const [userForm, setUserForm] = React.useState(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
-  const { loading, setLoading } = useLoaderContext();
 
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
@@ -32,9 +33,9 @@ const Register: FC<Props> = (): JSX.Element => {
       setLoading(true);
       const res = await UserService.signup(userForm);
       setUser(res);
-      navigate("/");
+      toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, you've successfully registered!`);
     } catch (err: any) {
-      console.log(err.response.data.message);
+      console.log(err);
       setUserErrors([err.response.data.message]);
     } finally {
       setLoading(false);

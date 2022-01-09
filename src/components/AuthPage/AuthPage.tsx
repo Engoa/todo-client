@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 import "./AuthPage.scss";
 
 interface Props {
@@ -36,6 +37,7 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
           <Link to={isLogin ? "/register" : "/login"}>{props.new} now</Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

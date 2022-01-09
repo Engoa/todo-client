@@ -1,14 +1,11 @@
-import { Switch } from "@mui/material";
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import { checkRoute } from "./helpers/utils";
 import Layout from "./Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useUserContext } from "./store/user";
-
-const authRoutes = ["login", "register"];
-const checkRoute = (pathname: string): boolean => authRoutes.includes(pathname.split("/")[1]);
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { isLoggedIn } = useUserContext();

@@ -8,7 +8,7 @@ export type LoaderContent = {
 export const LoaderContext = createContext<LoaderContent>({} as LoaderContent);
 export const useLoaderContext = () => useContext(LoaderContext);
 
-export const LoaderProvider: React.FC = ({ children }) => {
+export const LoaderProvider: React.FC = ({ children }): JSX.Element => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return <LoaderContext.Provider value={{ loading, setLoading }}>{children}</LoaderContext.Provider>;

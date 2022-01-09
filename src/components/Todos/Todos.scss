@@ -13,15 +13,18 @@
   &__user--title {
     align-self: flex-start;
     letter-spacing: 0.085em;
-    font-size: 1.3rem;
-    span {
-      font-weight: bold;
-      text-transform: capitalize;
-    }
+    font-size: 1.2rem;
+    opacity: 0.7;
     @include media("<smd") {
       align-self: center;
       letter-spacing: 0.05em;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+    }
+
+    .title--headings {
+      font-weight: bold;
+      text-transform: capitalize;
+      color: #e21a24;
     }
   }
   &__add {
@@ -94,27 +97,6 @@
         opacity: 0.75;
       }
     }
-
-    // &__delete {
-    //   position: absolute;
-    //   left: -3rem;
-    //   transition: $transition-250;
-    //   &:hover {
-    //     transform: scale(1.12);
-    //     color: #df2731;
-    //   }
-    //   @include media("<smd") {
-    //     left: -1.8rem;
-    //   }
-    // }
-
-    // &__update {
-    //   left: -5rem;
-
-    //   @include media("<smd") {
-    //     left: -3.2rem;
-    //   }
-    // }
   }
   &__actions {
     display: flex;

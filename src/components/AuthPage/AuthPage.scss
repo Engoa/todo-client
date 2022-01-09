@@ -15,7 +15,7 @@
     min-height: 450px;
     max-height: 800px;
     margin: auto;
-    background-color: #111114;
+    background-color: #0a0a0c;
     border-radius: 0.5rem;
     padding: 2.5rem;
     overflow-y: scroll;
@@ -111,6 +111,8 @@
 
     &__content {
       min-height: 100vh;
+      max-height: unset;
+      border-radius: 0;
       width: 100%;
     }
   }

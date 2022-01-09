@@ -6,17 +6,24 @@ import appTheme from "./styles/theme";
 import { UserProvider } from "./store/user";
 import { TodosProvider } from "./store/todos";
 import { LoaderProvider } from "./store/loader";
+import { SnackBarProvider } from "./store/snackbar";
+import Spinner from "./components/Spinner/Spinner";
+import SimpleSnackBar from "./components/SimpleSnackBar/SimpleSnackBar";
 import "./styles/globals.scss";
 
 ReactDOM.render(
   <LoaderProvider>
-    <UserProvider>
+    <SnackBarProvider>
       <TodosProvider>
-        <ThemeProvider theme={appTheme}>
-          <Router />
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider theme={appTheme}>
+            <Router />
+            <Spinner />
+            <SimpleSnackBar />
+          </ThemeProvider>
+        </UserProvider>
       </TodosProvider>
-    </UserProvider>
+    </SnackBarProvider>
   </LoaderProvider>,
   document.getElementById("root")
 );

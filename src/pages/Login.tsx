@@ -1,20 +1,21 @@
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React from "react";
 import AuthPage from "../components/AuthPage/AuthPage";
 import { useUserContext } from "../store/user";
 import { UserService } from "../services/user.service";
-import { useNavigate } from "react-router-dom";
 import { loginScheme } from "../schemes/authSchemes";
 import { IUser } from "../types/User";
 import { useLoaderContext } from "../store/loader";
+import { useSnackBarContext } from "../store/snackbar";
+import { capitilizeFirstLetter } from "../helpers/utils";
 
 const Login = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
   const { loading, setLoading } = useLoaderContext();
+  const { toggleSnackBar } = useSnackBarContext();
 
-  const navigate = useNavigate();
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
   };
@@ -28,9 +29,9 @@ const Login = (): JSX.Element => {
       setLoading(true);
       const res = await UserService.login(userForm);
       setUser(res);
-      navigate("/");
+      toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, It's good to have you back!`);
     } catch (err: any) {
-      console.log(err.response.data.message);
+      console.log(err);
       setUserErrors([err.response.data.message]);
     } finally {
       setLoading(false);

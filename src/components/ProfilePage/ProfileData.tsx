@@ -10,6 +10,7 @@ import { UserService } from "../../services/user.service";
 import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
+import { useSnackBarContext } from "../../store/snackbar";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const ProfileData: FC = (): JSX.Element => {
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
   const { setLoading } = useLoaderContext();
+  const { toggleSnackBar } = useSnackBarContext();
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
@@ -44,7 +46,7 @@ const ProfileData: FC = (): JSX.Element => {
       await UserService.updateUser(user._id, updatedFields);
       const updatedUser = Object.assign(user, updatedFields);
       setUser(updatedUser);
-      setUserErrors(["User updated successfully"]);
+      toggleSnackBar("User updated successfully");
     } catch (err: any) {
       console.log(err);
       setUserErrors([err.response.data.message]);
@@ -89,6 +91,7 @@ const ProfileData: FC = (): JSX.Element => {
                 name="firstName"
                 onChange={handleChange("firstName")}
                 spellCheck={false}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -103,6 +106,7 @@ const ProfileData: FC = (): JSX.Element => {
                 name="lastName"
                 onChange={handleChange("lastName")}
                 spellCheck={false}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -117,6 +121,7 @@ const ProfileData: FC = (): JSX.Element => {
                 name="email"
                 onChange={handleChange("email")}
                 spellCheck={false}
+                autoComplete="off"
               />
             </div>
           </div>

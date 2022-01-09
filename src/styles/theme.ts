@@ -119,6 +119,16 @@ const theme: ThemeOptions = {
         },
       },
     },
+    MuiSnackbarContent: {
+      styleOverrides: {
+        root: {
+          color: "black",
+          fontWeight: "bold",
+          fontSize: "0.85rem",
+          backgroundColor: "#bebebe",
+        },
+      },
+    },
   },
 };
 
