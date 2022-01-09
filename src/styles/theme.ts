@@ -77,7 +77,7 @@ const theme: ThemeOptions = {
       styleOverrides: {
         root: {
           "&.Mui-focused": {
-            color: "#e50914",
+            color: "#fff",
           },
         },
       },
@@ -115,7 +115,6 @@ const theme: ThemeOptions = {
         paper: {
           background: "#3a3939",
           borderRadius: "0.2rem",
-          overflow: "hidden",
           width: "200px",
         },
       },

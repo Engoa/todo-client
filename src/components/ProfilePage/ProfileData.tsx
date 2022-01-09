@@ -68,10 +68,10 @@ const ProfileData: FC = (): JSX.Element => {
       </div>
       <div className="profile__mid">
         <div className="profile__mid--img">
-          <img src="https://picsum.photos/200" alt="" />
+          <img src="https://picsum.photos/200" alt="User Image" />
         </div>
         <div className="profile__mid--name">
-          <h2>{`${firstName} ${lastName}`}</h2>
+          <span>{`${firstName} ${lastName}`}</span>
           <AccountCircleIcon />
         </div>
       </div>
@@ -122,15 +122,15 @@ const ProfileData: FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className="profile__errors">
-        <ul className="auth__errors">
+      {userErrors.length ? (
+        <ul className="auth__errors" style={{ alignItems: "center" }}>
           {userErrors.map((err: string, index: number) => (
             <li key={index} className="auth__error">
-              {err}
+              * {err}
             </li>
           ))}
         </ul>
-      </div>
+      ) : null}
     </>
   );
 };
