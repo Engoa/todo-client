@@ -15,4 +15,7 @@ export class UserService {
   static updateUser(userId: IUser, user: IUser): Promise<IUser> {
     return this.api.patch(`/users/${userId}`, user).then((res) => res.data);
   }
+  static updateUserImage(userId: IUser, src: IUser): Promise<IUser> {
+    return this.api.patch(`/users/${userId}`, src).then((res) => res.data);
+  }
 }

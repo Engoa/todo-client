@@ -7,6 +7,7 @@ export type IUser = {
   accessToken?: string;
   password?: string;
   _id?: any;
+  avatar?: string;
 };
 export type ISignup = {
   password?: string;

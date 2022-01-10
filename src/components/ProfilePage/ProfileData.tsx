@@ -12,6 +12,7 @@ import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
 import { differenceBetweenObjects } from "../../helpers/utils";
+import EditIcon from "@mui/icons-material/Edit";
 import _ from "lodash";
 import "./ProfileData.scss";
 
@@ -49,6 +50,20 @@ const ProfileData: FC = (): JSX.Element => {
     }
   };
 
+  const updateUserAvatar = async () => {
+    try {
+      const imageSrc = "https://source.unsplash.com/random/150x150";
+      const { email, ...rest } = user;
+      const updatedUser = { ...rest, avatar: imageSrc };
+      await UserService.updateUserImage(user._id, updatedUser);
+      setUser({ ...updatedUser, email });
+      toggleSnackBar("User avatar updated successfully");
+    } catch (err: any) {
+      console.log(err);
+      toggleSnackBar("An error occured while updating avatar image");
+    }
+  };
+
   const profilePageRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     profilePageAnimation(profilePageRef);
@@ -67,8 +82,11 @@ const ProfileData: FC = (): JSX.Element => {
         </IconButton>
       </div>
       <div className="profile__mid" ref={profilePageRef}>
-        <div className="profile__mid--img">
-          <img src="https://picsum.photos/200" alt="User Image" />
+        <div className="profile__mid--img" onClick={updateUserAvatar}>
+          <img src={user.avatar} alt="User Image" />
+          <div className="profile__mid--img--icon">
+            <EditIcon fontSize="small" />
+          </div>
         </div>
         <div className="profile__mid--name">
           <span>{`${firstName} ${lastName}`}</span>
