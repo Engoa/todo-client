@@ -36,8 +36,8 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
           <span>{isLogin ? "New to site?" : "Already have an account?"}</span>
           <Link to={isLogin ? "/register" : "/login"}>{props.new} now</Link>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

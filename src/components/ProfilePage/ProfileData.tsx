@@ -11,6 +11,7 @@ import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
+import { gsap } from "gsap";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -55,6 +56,16 @@ const ProfileData: FC = (): JSX.Element => {
     }
   };
 
+  const profilePageRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (profilePageRef.current) {
+      gsap.fromTo(
+        profilePageRef.current,
+        { autoAlpha: 0, scale: 0, filter: "blur(2px)", opacity: 0 },
+        { autoAlpha: 1, scale: 1, filter: "blur(0px)", opacity: 1, ease: "power3.inOut" }
+      );
+    }
+  }, []);
   return (
     <>
       <div className="profile__top">
@@ -68,7 +79,7 @@ const ProfileData: FC = (): JSX.Element => {
           <MoreHorizIcon />
         </IconButton>
       </div>
-      <div className="profile__mid">
+      <div className="profile__mid" ref={profilePageRef}>
         <div className="profile__mid--img">
           <img src="https://picsum.photos/200" alt="User Image" />
         </div>

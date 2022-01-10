@@ -9,16 +9,30 @@ import { useUserContext } from "../../store/user";
 import dayjs from "dayjs";
 import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
+import { gsap } from "gsap";
 import "./Todos.scss";
 
 const Todo: FC = (): JSX.Element => {
   const { user } = useUserContext();
   const { todos, todoForm, addTodo, finishTodo, deleteTodo, handleChange } = useTodosContext();
+  const todosRef = React.useRef<Array<any>>([]);
+  todosRef.current = [];
 
+  React.useEffect(() => {
+    if (todosRef.current.length) {
+      gsap.to(todosRef.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.3 }).totalDuration(0.8);
+    }
+  }, [todos]);
   interface IHandleTitle {
     userName: string;
     todoLength: number;
   }
+
+  const addTodoRefs = (el: HTMLDivElement) => {
+    if (el && !todosRef.current.includes(el)) {
+      todosRef.current.push(el);
+    }
+  };
 
   const HandleTitle: FC<IHandleTitle> = React.memo<IHandleTitle>(({ userName, todoLength }) => {
     if (!todos.length) {
@@ -82,9 +96,9 @@ const Todo: FC = (): JSX.Element => {
           <React.Fragment>
             {!todos.length
               ? null
-              : todos?.map((todo: ITodo) => {
+              : todos?.map((todo: ITodo, index: number) => {
                   return (
-                    <Accordion key={todo._id} className={todo.completed ? "completed" : "todo"}>
+                    <Accordion key={todo._id} className={todo.completed ? "completed todo" : "todo"} ref={addTodoRefs}>
                       <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
                         <div className="todos__details">
                           <div className="todos__details--title">
@@ -92,12 +106,12 @@ const Todo: FC = (): JSX.Element => {
                           </div>
                           <div className="todos__details--dates">
                             <div className="todos__actions">
-                              <div className="todos__actions__update action" onClick={() => finishTodo(todo._id)}>
+                              <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e)}>
                                 <Tooltip title="Finish" TransitionComponent={Zoom} placement="left" arrow>
                                   <DoneIcon />
                                 </Tooltip>
                               </div>
-                              <div className="todos__actions__delete action" onClick={() => deleteTodo(todo._id)}>
+                              <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e)}>
                                 <Tooltip title="Delete" TransitionComponent={Zoom} placement="top" arrow>
                                   <ClearIcon />
                                 </Tooltip>

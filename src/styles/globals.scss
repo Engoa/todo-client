@@ -17,6 +17,7 @@ body,
   color: white;
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .Layout {
@@ -26,7 +27,6 @@ body,
   width: 100%;
   max-width: 1440px;
   margin: auto;
-  padding-bottom: 1rem;
   gap: 2rem;
 }
 

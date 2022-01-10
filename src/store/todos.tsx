@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, SyntheticEvent, useContext } from "react";
 import { TodoService } from "../services/todo.service";
 import { ITodo } from "../types/Todo";
 import { useSnackBarContext } from "./snackbar";
@@ -8,8 +8,8 @@ export type TodoContent = {
   todoForm: ITodo;
   setTodos: (todos: ITodo[]) => void;
   addTodo: (todoForm: ITodo) => void;
-  deleteTodo: (selectedTodoID: string) => void;
-  finishTodo: (selectedTodoID: string) => void;
+  deleteTodo: (selectedTodoID: string, e: SyntheticEvent) => void;
+  finishTodo: (selectedTodoID: string, e: SyntheticEvent) => void;
   handleChange: (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -42,7 +42,8 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       setTodoForm({ text: "", title: "", completed: false });
     }
   };
-  const deleteTodo = async (selectedTodoID: string) => {
+  const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
+    e.stopPropagation();
     try {
       await TodoService.deleteTodo(selectedTodoID);
       setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
@@ -52,7 +53,8 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       console.log(err);
     }
   };
-  const finishTodo = async (selectedTodoID: string) => {
+  const finishTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
+    e.stopPropagation();
     const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
     if (!selectedTodo) return;
     try {
