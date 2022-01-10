@@ -26,6 +26,7 @@ const Register: FC<Props> = (): JSX.Element => {
 
   const register = async (e: any) => {
     e.preventDefault();
+    setUserErrors([]);
     const isValid = await registerScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
@@ -33,10 +34,10 @@ const Register: FC<Props> = (): JSX.Element => {
       setLoading(true);
       const res = await UserService.signup(userForm);
       setUser(res);
-      toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, you've successfully registered!`);
+      toggleSnackBar(`Hi ${capitilizeFirstLetter(res?.firstName)}, you've successfully registered!`);
     } catch (err: any) {
-      console.log(err);
-      setUserErrors([err.response.data.message]);
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
     } finally {
       setLoading(false);
     }

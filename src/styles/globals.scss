@@ -19,6 +19,9 @@ body,
   width: 100%;
   overflow-x: hidden;
 }
+body {
+  overflow-y: scroll;
+}
 
 .Layout {
   display: flex;

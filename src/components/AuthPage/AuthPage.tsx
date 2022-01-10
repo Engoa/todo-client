@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import { authPageAnimation } from "../../animations/animations";
 import "./AuthPage.scss";
 
 interface Props {
@@ -14,9 +15,14 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
   const location = useLocation();
   const isLogin = location.pathname === "/login";
 
+  const authPageRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    authPageAnimation(authPageRef);
+  }, []);
+
   return (
     <div className="auth">
-      <div className="auth__content" style={{ justifyContent: `${isLogin ? "center" : "flex-start"}` }}>
+      <div className="auth__content" style={{ justifyContent: `${isLogin ? "center" : "flex-start"}` }} ref={authPageRef}>
         <div className="auth__title">
           <h3>{props.title}</h3>
         </div>
@@ -26,7 +32,7 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
           <ul className="auth__errors">
             {props.userErrors.map((err: string, index: number) => (
               <li key={index} className="auth__error">
-                * {err}
+                {err}
               </li>
             ))}
           </ul>
@@ -36,8 +42,8 @@ const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
           <span>{isLogin ? "New to site?" : "Already have an account?"}</span>
           <Link to={isLogin ? "/register" : "/login"}>{props.new} now</Link>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

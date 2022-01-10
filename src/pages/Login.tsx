@@ -22,6 +22,7 @@ const Login = (): JSX.Element => {
 
   const signIn = async (e: any) => {
     e.preventDefault();
+    setUserErrors([]);
     const isValid = await loginScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
@@ -31,8 +32,8 @@ const Login = (): JSX.Element => {
       setUser(res);
       toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, It's good to have you back!`);
     } catch (err: any) {
-      console.log(err);
-      setUserErrors([err.response.data.message]);
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
     } finally {
       setLoading(false);
     }

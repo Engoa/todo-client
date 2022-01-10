@@ -27,11 +27,11 @@
   &__mid {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
+    justify-content: center;
+    gap: 2rem;
     width: 100%;
     @include media("<smd") {
-      justify-content: center;
+      gap: 1rem;
       flex-direction: column;
     }
     &--img {

@@ -11,7 +11,7 @@ import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
-import { gsap } from "gsap";
+import { profilePageAnimation } from "../../animations/animations";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -58,13 +58,7 @@ const ProfileData: FC = (): JSX.Element => {
 
   const profilePageRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
-    if (profilePageRef.current) {
-      gsap.fromTo(
-        profilePageRef.current,
-        { autoAlpha: 0, scale: 0, filter: "blur(2px)", opacity: 0 },
-        { autoAlpha: 1, scale: 1, filter: "blur(0px)", opacity: 1, ease: "power3.inOut" }
-      );
-    }
+    profilePageAnimation(profilePageRef);
   }, []);
   return (
     <>

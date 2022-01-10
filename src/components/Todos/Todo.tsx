@@ -9,7 +9,7 @@ import { useUserContext } from "../../store/user";
 import dayjs from "dayjs";
 import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
-import { gsap } from "gsap";
+import { tasksAnimations } from "../../animations/animations";
 import "./Todos.scss";
 
 const Todo: FC = (): JSX.Element => {
@@ -19,9 +19,7 @@ const Todo: FC = (): JSX.Element => {
   todosRef.current = [];
 
   React.useEffect(() => {
-    if (todosRef.current.length) {
-      gsap.to(todosRef.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.3 }).totalDuration(0.8);
-    }
+    tasksAnimations(todosRef);
   }, [todos]);
   interface IHandleTitle {
     userName: string;

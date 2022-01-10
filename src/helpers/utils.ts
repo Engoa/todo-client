@@ -15,3 +15,9 @@ export const checkRoute = (pathname: string): boolean => {
   const isOnAuthPages = authRoutes.includes(pathname.split("/")[1]);
   return isOnAuthPages;
 };
+
+export const isError = (obj: Object) => {
+  return Object.prototype.toString.call(obj) === "[object Error]";
+};
+
+export const isMobile = window.matchMedia("(max-width: 960px)").matches;
