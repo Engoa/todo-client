@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import { getUserFromLS } from "../store/user";
 
 export const ApiService = (url: string) => {

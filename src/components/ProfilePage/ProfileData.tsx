@@ -5,13 +5,15 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import React, { FC } from "react";
-import _ from "lodash";
 import { UserService } from "../../services/user.service";
 import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
+import { differenceBetweenObjects } from "../../helpers/utils";
+import _ from "lodash";
+import "./ProfileData.scss";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,34 +25,25 @@ const ProfileData: FC = (): JSX.Element => {
   const { setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
 
-  const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
+  const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
   };
 
-  const difference = (object: Object, base: Object) => {
-    function changes(object, base) {
-      return _.transform(object, function (result, value, key) {
-        if (!_.isEqual(value, base[key])) {
-          result[key] = _.isObject(value) && _.isObject(base[key]) ? changes(value, base[key]) : value;
-        }
-      });
-    }
-    return changes(object, base);
-  };
   const updateUser = async () => {
+    setUserErrors([]);
     const isValid = await updateUserScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
     if (Array.isArray(isValid)) return setUserErrors(isValid);
     // If not valid return and show errors.
     try {
       setLoading(true);
-      const updatedFields = difference(userForm, user);
+      const updatedFields = differenceBetweenObjects(userForm, user);
       await UserService.updateUser(user._id, updatedFields);
       const updatedUser = Object.assign(user, updatedFields);
       setUser(updatedUser);
       toggleSnackBar("User updated successfully");
     } catch (err: any) {
-      console.log(err);
-      setUserErrors([err.response.data.message]);
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
     } finally {
       setLoading(false);
     }
@@ -136,7 +129,7 @@ const ProfileData: FC = (): JSX.Element => {
         <ul className="auth__errors" style={{ alignItems: "center" }}>
           {userErrors.map((err: string, index: number) => (
             <li key={index} className="auth__error">
-              * {err}
+              {err}
             </li>
           ))}
         </ul>

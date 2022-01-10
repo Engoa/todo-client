@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import AuthPage from "../components/AuthPage/AuthPage";
 import { useUserContext } from "../store/user";
 import { UserService } from "../services/user.service";
@@ -16,11 +16,11 @@ const Login = (): JSX.Element => {
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
 
-  const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
+  const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
   };
 
-  const signIn = async (e: any) => {
+  const signIn = async (e: SyntheticEvent) => {
     e.preventDefault();
     setUserErrors([]);
     const isValid = await loginScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);

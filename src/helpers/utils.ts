@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const str2bool = (value: string | boolean) => {
   if (value && typeof value === "string") {
     if (value.toLowerCase() === "true") return true;
@@ -16,8 +18,13 @@ export const checkRoute = (pathname: string): boolean => {
   return isOnAuthPages;
 };
 
-export const isError = (obj: Object) => {
-  return Object.prototype.toString.call(obj) === "[object Error]";
+export const differenceBetweenObjects = (object: Object, base: Object) => {
+  function changes(object, base) {
+    return _.transform(object, function (result, value, key) {
+      if (!_.isEqual(value, base[key])) {
+        result[key] = _.isObject(value) && _.isObject(base[key]) ? changes(value, base[key]) : value;
+      }
+    });
+  }
+  return changes(object, base);
 };
-
-export const isMobile = window.matchMedia("(max-width: 960px)").matches;

@@ -1,12 +1,13 @@
 import { gsap } from "gsap";
+import { RefObject } from "react";
 
-export const tasksAnimations = (ref: any) => {
+export const tasksAnimations = (ref: RefObject<any>) => {
   if (ref.current.length) {
     gsap.to(ref.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.3 }).totalDuration(0.9);
   }
 };
 
-export const profilePageAnimation = (ref: any) => {
+export const profilePageAnimation = (ref: RefObject<HTMLDivElement>) => {
   if (ref.current) {
     gsap.fromTo(
       ref.current,
@@ -16,7 +17,7 @@ export const profilePageAnimation = (ref: any) => {
   }
 };
 
-export const authPageAnimation = (ref: any) => {
+export const authPageAnimation = (ref: RefObject<HTMLDivElement>) => {
   if (ref.current) {
     gsap
       .fromTo(

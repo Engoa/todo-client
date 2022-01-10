@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import arrayOfCountries from "../helpers/countries";
 import AuthPage from "../components/AuthPage/AuthPage";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
@@ -24,7 +24,7 @@ const Register: FC<Props> = (): JSX.Element => {
     setUserForm({ ...userForm, [prop]: event.target.value });
   };
 
-  const register = async (e: any) => {
+  const register = async (e: SyntheticEvent) => {
     e.preventDefault();
     setUserErrors([]);
     const isValid = await registerScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);

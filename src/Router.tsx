@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 import { checkRoute } from "./helpers/utils";
 import Layout from "./Layout";
 import Login from "./pages/Login";

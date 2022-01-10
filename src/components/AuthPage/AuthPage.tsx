@@ -8,7 +8,7 @@ import "./AuthPage.scss";
 interface Props {
   title: string;
   new: string;
-  userErrors: Array<string>;
+  userErrors: string[];
 }
 
 const AuthPage: FC<Props> = ({ children, ...props }): JSX.Element => {
