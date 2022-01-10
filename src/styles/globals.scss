@@ -20,7 +20,7 @@ body,
   overflow-x: hidden;
 }
 body {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
 }
 
 .Layout {

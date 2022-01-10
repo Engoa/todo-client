@@ -1,0 +1,18 @@
+.page__not__found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 100vh;
+  &--content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #0a0a0c;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+}

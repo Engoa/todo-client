@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import { checkRoute } from "./helpers/utils";
 import Layout from "./Layout";
@@ -34,6 +35,7 @@ const Router: React.FC = ({ children }) => {
             {isLoggedIn && <Route path="profile" element={<ProfilePage />} />}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="*" element={<PageNotFound />} />
             {children}
           </Route>
         </Routes>
