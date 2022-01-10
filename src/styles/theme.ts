@@ -14,6 +14,12 @@ const theme: ThemeOptions = {
       defaultProps: {
         variant: "filled",
       },
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          letterSpacing: "0.05rem",
+        },
+      },
     },
     MuiSelect: {
       defaultProps: {
@@ -76,6 +82,7 @@ const theme: ThemeOptions = {
     MuiInputLabel: {
       styleOverrides: {
         root: {
+          letterSpacing: "0.05rem",
           "&.Mui-focused": {
             color: "#fff",
           },

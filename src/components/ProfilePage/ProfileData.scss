@@ -23,6 +23,21 @@
         margin-left: 0;
       }
     }
+    .profile__top__backicon {
+      * {
+        transition: $transition-250;
+      }
+    }
+    button {
+      &:hover,
+      &:focus {
+        .profile__top__backicon {
+          * {
+            transform: translateX(-5px);
+          }
+        }
+      }
+    }
   }
   &__mid {
     display: flex;
@@ -106,6 +121,20 @@
       color: #fff;
       letter-spacing: 0.07em;
       width: 100%;
+    }
+
+    &__logout {
+      button {
+        svg {
+          transition: $transition-250;
+        }
+        &:hover,
+        &:focus {
+          svg {
+            transform: scale(1.1);
+          }
+        }
+      }
     }
   }
 }

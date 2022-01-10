@@ -1,5 +1,5 @@
 import React, { FC, RefObject } from "react";
-import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, TextField, Tooltip, Typography, Zoom } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField, Tooltip, Typography, Zoom } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
@@ -106,17 +106,23 @@ const Todo: FC = (): JSX.Element => {
                             <div className="todos__actions">
                               <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e)}>
                                 <Tooltip title="Finish" TransitionComponent={Zoom} placement="left" arrow>
-                                  <DoneIcon />
+                                  <IconButton size="small">
+                                    <DoneIcon />
+                                  </IconButton>
                                 </Tooltip>
                               </div>
                               <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e)}>
                                 <Tooltip title="Delete" TransitionComponent={Zoom} placement="top" arrow>
-                                  <ClearIcon />
+                                  <IconButton size="small">
+                                    <ClearIcon />
+                                  </IconButton>
                                 </Tooltip>
                               </div>
                               <div className="todos__actions__edit action">
                                 <Tooltip title="Edit" TransitionComponent={Zoom} placement="right" arrow>
-                                  <EditIcon />
+                                  <IconButton size="small">
+                                    <EditIcon />
+                                  </IconButton>
                                 </Tooltip>
                               </div>
                             </div>

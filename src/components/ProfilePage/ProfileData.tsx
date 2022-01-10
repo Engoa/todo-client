@@ -58,7 +58,7 @@ const ProfileData: FC = (): JSX.Element => {
       <div className="profile__top">
         <Tooltip title="Go Back" arrow>
           <IconButton onClick={() => navigate(-1)}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon className="profile__top__backicon" />
           </IconButton>
         </Tooltip>
         <h1>My Account</h1>
