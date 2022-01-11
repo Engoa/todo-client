@@ -32,23 +32,28 @@ const Todo: FC = (): JSX.Element => {
     }
   };
 
+  const incompleteTodos = todos.filter((todo: ITodo) => !todo.completed);
+  const completedTodos = todos.filter((todo: ITodo) => todo.completed);
+
   const HandleTitle: FC<IHandleTitle> = React.memo<IHandleTitle>(({ userName, todoLength }) => {
-    if (!todos.length) {
+    if (!incompleteTodos.length) {
       return (
         <span>
           Yay! <span className="title--headings">{userName}</span>, you have no tasks left to do! 🤓
         </span>
       );
-    } else if (todos.length === 1) {
+    } else if (incompleteTodos.length === 1) {
       return (
         <span>
-          Hi <span className="title--headings">{userName}</span>, you have <span className="title--headings">{todoLength}</span> task left to do 😊
+          Hi <span className="title--headings">{userName}</span>, you have <span className="title--headings">{incompleteTodos.length}</span> task left
+          to do 😊
         </span>
       );
     } else {
       return (
         <span>
-          Hi <span className="title--headings">{userName}</span>, you have <span className="title--headings">{todoLength}</span> tasks left to do 😊
+          Hi <span className="title--headings">{userName}</span>, you have <span className="title--headings">{incompleteTodos.length}</span> tasks
+          left to do 😊
         </span>
       );
     }
