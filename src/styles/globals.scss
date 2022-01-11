@@ -76,6 +76,7 @@ select {
   align-items: center;
   justify-content: center;
   display: flex;
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   user-select: none;
   span {

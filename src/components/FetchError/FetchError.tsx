@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import "./Error.scss";
-const Error: FC = (): JSX.Element => {
+import "./FetchError.scss";
+const FetchError: FC = (): JSX.Element => {
   return (
     <>
       <h1>Error occured while fetching, please try again at a later date!</h1>
@@ -8,4 +8,4 @@ const Error: FC = (): JSX.Element => {
   );
 };
 
-export default Error;
+export default FetchError;

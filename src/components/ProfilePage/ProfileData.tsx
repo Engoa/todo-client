@@ -1,10 +1,9 @@
+import React, { FC } from "react";
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";
 import { useUserContext } from "../../store/user";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
-import React, { FC } from "react";
 import { UserService } from "../../services/user.service";
 import { updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
@@ -12,6 +11,8 @@ import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
 import { differenceBetweenObjects } from "../../helpers/utils";
+import AvatarModal from "../AvatarModal/AvatarModal";
+import avatarPlaceHolder from "../../assets/images/avatar.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import _ from "lodash";
 import "./ProfileData.scss";
@@ -20,14 +21,25 @@ const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
 
   const { user, setUser } = useUserContext();
-  const { firstName, lastName, email } = user;
-  const [userForm, setUserForm] = React.useState<IUser>(user);
-  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
   const { setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
+  const [userForm, setUserForm] = React.useState<IUser>(user);
+  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
+  const [toggleModal, setToggleModal] = React.useState<boolean>(false);
+  // const [imageForm, setImageForm] = React.useState<string>("");
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
+  };
+
+  const toggleModalHandler = () => {
+    setToggleModal(!toggleModal);
+  };
+
+  const onImageBroken = (e) => {
+    e.target.src = avatarPlaceHolder;
+    setUser({ ...user, avatar: avatarPlaceHolder });
+    toggleSnackBar("Image link is broken, resetting to default avatar");
   };
 
   const updateUser = async () => {
@@ -51,10 +63,12 @@ const ProfileData: FC = (): JSX.Element => {
   };
 
   const updateUserAvatar = async () => {
+    setUserErrors([]);
+    if (!userForm.avatar) return;
+    if (userForm.avatar === user.avatar) return setUserErrors(["Please select a new avatar"]);
     try {
-      const imageSrc = "https://source.unsplash.com/random/150x150";
       const { email, ...rest } = user;
-      const updatedUser = { ...rest, avatar: imageSrc };
+      const updatedUser = { ...rest, avatar: userForm.avatar };
       await UserService.updateUserImage(user._id, updatedUser);
       setUser({ ...updatedUser, email });
       toggleSnackBar("User avatar updated successfully");
@@ -70,6 +84,14 @@ const ProfileData: FC = (): JSX.Element => {
   }, []);
   return (
     <>
+      <AvatarModal
+        toggleModal={toggleModal}
+        setToggleModal={toggleModalHandler}
+        handleChange={handleChange}
+        updateUserAvatar={updateUserAvatar}
+        userErrors={userErrors}
+      />
+
       <div className="profile__top">
         <Tooltip title="Go Back" arrow>
           <IconButton onClick={() => navigate(-1)}>
@@ -82,16 +104,13 @@ const ProfileData: FC = (): JSX.Element => {
         </IconButton>
       </div>
       <div className="profile__mid" ref={profilePageRef}>
-        <div className="profile__mid--img" onClick={updateUserAvatar}>
-          <img src={user.avatar} alt="User Image" />
+        <div className="profile__mid--img" onClick={toggleModalHandler}>
+          <img src={!user.avatar ? avatarPlaceHolder : user.avatar} alt="User Image" onError={onImageBroken} />
           <div className="profile__mid--img--icon">
             <EditIcon fontSize="small" />
           </div>
         </div>
-        <div className="profile__mid--name">
-          <span>{`${firstName} ${lastName}`}</span>
-          <AccountCircleIcon />
-        </div>
+        <span>{`${user.firstName} ${user.lastName}`}</span>
       </div>
       <div className="profile__bottom">
         <Button variant="contained" disabled={_.isEqual(user, userForm) ? true : false} onClick={updateUser}>
@@ -103,7 +122,7 @@ const ProfileData: FC = (): JSX.Element => {
               <TextField
                 label="First Name"
                 className="profile__bottom__value"
-                defaultValue={firstName}
+                defaultValue={user.firstName}
                 name="firstName"
                 onChange={handleChange("firstName")}
                 spellCheck={false}
@@ -118,7 +137,7 @@ const ProfileData: FC = (): JSX.Element => {
               <TextField
                 label="Last Name"
                 className="profile__bottom__value"
-                defaultValue={lastName}
+                defaultValue={user.lastName}
                 name="lastName"
                 onChange={handleChange("lastName")}
                 spellCheck={false}
@@ -133,7 +152,7 @@ const ProfileData: FC = (): JSX.Element => {
               <TextField
                 label="Email"
                 className="profile__bottom__value"
-                defaultValue={email}
+                defaultValue={user.email}
                 name="email"
                 onChange={handleChange("email")}
                 spellCheck={false}

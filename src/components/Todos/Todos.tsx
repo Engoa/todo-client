@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { TodoService } from "../../services/todo.service";
 import { useLoaderContext } from "../../store/loader";
 import { useTodosContext } from "../../store/todos";
-import Error from "../Error/Error";
+import FetchError from "../FetchError/FetchError";
 import Todo from "./Todo";
 import "./Todos.scss";
 
@@ -26,7 +26,7 @@ const Todos: FC = (): JSX.Element => {
       setLoading(false);
     }
   };
-  return <main className={!error ? "todos__wrapper" : "error--wrapper"}>{!error ? <Todo /> : <Error />}</main>;
+  return <main className={!error ? "todos__wrapper" : "error--wrapper"}>{!error ? <Todo /> : <FetchError />}</main>;
 };
 
 export default Todos;

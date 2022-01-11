@@ -136,6 +136,14 @@ const theme: ThemeOptions = {
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          backdropFilter: "blur(3px)",
+          WebkitBackdropFilter: "blur(3px)",
+        },
+      },
+    },
   },
 };
 

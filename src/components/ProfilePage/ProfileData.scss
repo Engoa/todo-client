@@ -50,26 +50,29 @@
       flex-direction: column;
     }
     &--img {
-      width: 100px;
-      min-width: 100px;
-      min-height: 100px;
-      border-radius: 5rem;
+      width: 180px;
+      min-width: 180px;
+      min-height: 180px;
+      border-radius: 50%;
       align-self: center;
       display: flex;
       position: relative;
       cursor: pointer;
-
+      border: 2px solid white;
+      transition: $transition-250;
+      will-change: transform;
       img {
-        border-radius: 5rem;
+        border-radius: 50%;
         width: 100%;
+        padding: 2px;
       }
 
       &--icon {
         position: absolute;
-        right: -0.3rem;
+        right: 0.8rem;
         top: 1rem;
-        width: 20px;
-        height: 20px;
+        width: 23px;
+        height: 23px;
         border-radius: 50%;
         z-index: 2;
         background: rgb(255, 255, 255);
@@ -84,27 +87,21 @@
           fill: #111114;
         }
       }
-    }
-    &--name {
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-direction: column;
-      gap: 0.5rem;
 
-      span {
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-transform: capitalize;
-        @include media("<smd") {
-          text-align: center;
-        }
+      &:hover {
+        transform: scale(1.02);
       }
-      @include media("<smd") {
-        svg {
-          text-align: center;
-          width: 100%;
-        }
+    }
+
+    span {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+    @include media("<smd") {
+      svg {
+        text-align: center;
+        width: 100%;
       }
     }
   }
