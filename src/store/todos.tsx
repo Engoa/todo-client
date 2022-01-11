@@ -45,8 +45,8 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
   const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
     e.stopPropagation();
     try {
-      await TodoService.deleteTodo(selectedTodoID);
       setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
+      await TodoService.deleteTodo(selectedTodoID);
       toggleSnackBar("Task deleted successfully");
     } catch (err: any) {
       toggleSnackBar("An error occured while deleting task");
@@ -62,8 +62,8 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
         ...selectedTodo,
         completed: !selectedTodo.completed,
       };
-      await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
       setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+      await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
       toggleSnackBar("Task updated successfully");
     } catch (err: any) {
       toggleSnackBar("An error occured while updating task");

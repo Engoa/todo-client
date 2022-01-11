@@ -3,7 +3,7 @@ import { RefObject } from "react";
 
 export const tasksAnimations = (ref: RefObject<any>) => {
   if (ref.current.length) {
-    gsap.to(ref.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.3 }).totalDuration(0.9);
+    gsap.to(ref.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.3 }).totalDuration(0.75);
   }
 };
 
