@@ -1,5 +1,6 @@
 import { createTheme, ThemeOptions } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
+import { isMobile } from "../helpers/utils";
 
 const theme: ThemeOptions = {
   palette: {
@@ -131,7 +132,7 @@ const theme: ThemeOptions = {
         root: {
           color: "black",
           fontWeight: "bold",
-          fontSize: "0.85rem",
+          fontSize: `${isMobile ? "0.85rem" : "0.9rem"}`,
           backgroundColor: "#bebebe",
         },
       },

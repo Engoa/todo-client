@@ -1,4 +1,6 @@
-import _ from "lodash";
+import transform from "lodash/transform";
+import isEqual from "lodash/isEqual";
+import isObject from "lodash/isObject";
 
 export const str2bool = (value: string | boolean) => {
   if (value && typeof value === "string") {
@@ -20,11 +22,13 @@ export const checkRoute = (pathname: string): boolean => {
 
 export const differenceBetweenObjects = (object: Object, base: Object) => {
   function changes(object, base) {
-    return _.transform(object, function (result, value, key) {
-      if (!_.isEqual(value, base[key])) {
-        result[key] = _.isObject(value) && _.isObject(base[key]) ? changes(value, base[key]) : value;
+    return transform(object, function (result, value, key) {
+      if (!isEqual(value, base[key])) {
+        result[key] = isObject(value) && isObject(base[key]) ? changes(value, base[key]) : value;
       }
     });
   }
   return changes(object, base);
 };
+
+export const isMobile = window.matchMedia("(max-width: 960px)").matches;

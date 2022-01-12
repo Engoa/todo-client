@@ -5,7 +5,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../services/user.service";
-import { updateUserScheme } from "../../schemes/authSchemes";
+import { updateAvatarScheme, updateUserScheme } from "../../schemes/authSchemes";
 import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
@@ -14,7 +14,9 @@ import { differenceBetweenObjects } from "../../helpers/utils";
 import AvatarModal from "../AvatarModal/AvatarModal";
 import avatarPlaceHolder from "../../assets/images/avatar.svg";
 import EditIcon from "@mui/icons-material/Edit";
-import _ from "lodash";
+import UserErrors from "../UserErrors/UserErrors";
+import useErrors from "../../hooks/useErrors";
+import isEqual from "lodash/isEqual";
 import "./ProfileData.scss";
 
 const ProfileData: FC = (): JSX.Element => {
@@ -23,10 +25,9 @@ const ProfileData: FC = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const { setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
+  const { validateSchemes, setUserErrors, userErrors } = useErrors();
   const [userForm, setUserForm] = React.useState<IUser>(user);
-  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
   const [toggleModal, setToggleModal] = React.useState<boolean>(false);
-  // const [imageForm, setImageForm] = React.useState<string>("");
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
@@ -34,19 +35,17 @@ const ProfileData: FC = (): JSX.Element => {
 
   const toggleModalHandler = () => {
     setToggleModal(!toggleModal);
+    setUserErrors([]);
   };
 
-  const onImageBroken = (e) => {
+  const onImageBroken = (e: any) => {
     e.target.src = avatarPlaceHolder;
     setUser({ ...user, avatar: avatarPlaceHolder });
-    toggleSnackBar("Image link is broken, resetting to default avatar");
+    toggleSnackBar("Image link is broken, resetting to default");
   };
 
   const updateUser = async () => {
-    setUserErrors([]);
-    const isValid = await updateUserScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
-    if (Array.isArray(isValid)) return setUserErrors(isValid);
-    // If not valid return and show errors.
+    if (await validateSchemes(updateUserScheme, userForm)) return;
     try {
       setLoading(true);
       const updatedFields = differenceBetweenObjects(userForm, user);
@@ -62,20 +61,27 @@ const ProfileData: FC = (): JSX.Element => {
     }
   };
 
-  const updateUserAvatar = async () => {
-    setUserErrors([]);
-    if (!userForm.avatar) return;
-    if (userForm.avatar === user.avatar) return setUserErrors(["Please select a new avatar"]);
+  const updateAvatar = async (avatar: string) => {
     try {
       const { email, ...rest } = user;
-      const updatedUser = { ...rest, avatar: userForm.avatar };
+      const updatedUser = { ...rest, avatar: avatar };
       await UserService.updateUserImage(user._id, updatedUser);
       setUser({ ...updatedUser, email });
       toggleSnackBar("User avatar updated successfully");
     } catch (err: any) {
-      console.log(err);
-      toggleSnackBar("An error occured while updating avatar image");
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
     }
+  };
+
+  const updateUserAvatar = async () => {
+    if (await validateSchemes(updateAvatarScheme, { avatar: userForm.avatar })) return;
+    updateAvatar(userForm.avatar);
+  };
+
+  const resetUserAvatar = async () => {
+    updateAvatar(avatarPlaceHolder);
+    setUserForm({ ...userForm, avatar: "" });
   };
 
   const profilePageRef = React.useRef<HTMLDivElement>(null);
@@ -89,7 +95,9 @@ const ProfileData: FC = (): JSX.Element => {
         setToggleModal={toggleModalHandler}
         handleChange={handleChange}
         updateUserAvatar={updateUserAvatar}
+        imageInputForm={userForm.avatar}
         userErrors={userErrors}
+        resetUserAvatar={resetUserAvatar}
       />
 
       <div className="profile__top">
@@ -110,10 +118,12 @@ const ProfileData: FC = (): JSX.Element => {
             <EditIcon fontSize="small" />
           </div>
         </div>
-        <span>{`${user.firstName} ${user.lastName}`}</span>
+        <div className="profile__mid--name">
+          <span>{`${user.firstName} ${user.lastName}`}</span>
+        </div>
       </div>
       <div className="profile__bottom">
-        <Button variant="contained" disabled={_.isEqual(user, userForm) ? true : false} onClick={updateUser}>
+        <Button variant="contained" disabled={isEqual(user, userForm)} onClick={updateUser}>
           Edit
         </Button>
         <div className="profile__bottom__item">
@@ -162,15 +172,7 @@ const ProfileData: FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {userErrors.length ? (
-        <ul className="auth__errors" style={{ alignItems: "center" }}>
-          {userErrors.map((err: string, index: number) => (
-            <li key={index} className="auth__error">
-              {err}
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <UserErrors userErrors={userErrors} />
     </>
   );
 };

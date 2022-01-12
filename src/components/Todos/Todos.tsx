@@ -9,7 +9,7 @@ import "./Todos.scss";
 const Todos: FC = (): JSX.Element => {
   const { todos, setTodos } = useTodosContext();
   const { setLoading } = useLoaderContext();
-  const [error, setError] = React.useState<boolean>(false);
+  const [fetchError, setFetchError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (!todos.length) fetchTodos();
@@ -20,13 +20,13 @@ const Todos: FC = (): JSX.Element => {
       setLoading(true);
       await TodoService.getTodos().then(setTodos);
     } catch (err) {
-      setError(true);
+      setFetchError(true);
       console.log(err);
     } finally {
       setLoading(false);
     }
   };
-  return <main className={!error ? "todos__wrapper" : "error--wrapper"}>{!error ? <Todo /> : <FetchError />}</main>;
+  return <main className={!fetchError ? "todos__wrapper" : "error--wrapper"}>{!fetchError ? <Todo /> : <FetchError />}</main>;
 };
 
 export default Todos;

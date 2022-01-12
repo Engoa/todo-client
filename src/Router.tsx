@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import ProfilePage from "./pages/ProfilePage";
@@ -23,7 +23,7 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
-const Router: React.FC = ({ children }) => {
+const Router: FC = ({ children }) => {
   const { isLoggedIn } = useUserContext();
 
   return (

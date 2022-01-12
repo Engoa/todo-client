@@ -46,7 +46,7 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 40, height: 40 }}>{user.firstName[0].toUpperCase()}</Avatar>
+            <Avatar sx={{ width: 40, height: 40 }} src={user.avatar} />
           </IconButton>
         </Tooltip>
       </Box>

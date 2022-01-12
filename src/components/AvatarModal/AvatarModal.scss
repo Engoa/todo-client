@@ -13,7 +13,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
-  width: 300px;
+  width: 400px;
 
   @include media("<smd") {
     width: calc(100% - 40px);

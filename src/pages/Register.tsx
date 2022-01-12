@@ -8,6 +8,8 @@ import { registerScheme } from "../schemes/authSchemes";
 import { useLoaderContext } from "../store/loader";
 import { useSnackBarContext } from "../store/snackbar";
 import { capitilizeFirstLetter } from "../helpers/utils";
+import useErrors from "../hooks/useErrors";
+import UserErrors from "../components/UserErrors/UserErrors";
 
 interface Props {
   children?: React.ReactNode;
@@ -17,8 +19,8 @@ const Register: FC<Props> = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
+  const { validateSchemes, setUserErrors, userErrors } = useErrors();
   const [userForm, setUserForm] = React.useState(user);
-  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
 
   const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement> & any) => {
     setUserForm({ ...userForm, [prop]: event.target.value });
@@ -26,10 +28,7 @@ const Register: FC<Props> = (): JSX.Element => {
 
   const register = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setUserErrors([]);
-    const isValid = await registerScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
-    if (Array.isArray(isValid)) return setUserErrors(isValid);
-    // If not valid return and show errors.
+    if (await validateSchemes(registerScheme, userForm)) return;
     try {
       setLoading(true);
       const res = await UserService.signup(userForm);
@@ -45,7 +44,7 @@ const Register: FC<Props> = (): JSX.Element => {
 
   return (
     <>
-      <AuthPage title={"Sign Up"} new={"Sign In"} userErrors={userErrors}>
+      <AuthPage title={"Sign Up"} new={"Sign In"}>
         <form className="auth__form">
           <div className="auth__input">
             <TextField label="Email Address" onChange={handleChange("email")} type="email" autoComplete="email" />
@@ -80,6 +79,7 @@ const Register: FC<Props> = (): JSX.Element => {
             </Button>
           </div>
         </form>
+        <UserErrors userErrors={userErrors} />
       </AuthPage>
     </>
   );

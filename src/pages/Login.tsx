@@ -8,11 +8,13 @@ import { IUser } from "../types/User";
 import { useLoaderContext } from "../store/loader";
 import { useSnackBarContext } from "../store/snackbar";
 import { capitilizeFirstLetter } from "../helpers/utils";
+import useErrors from "../hooks/useErrors";
+import UserErrors from "../components/UserErrors/UserErrors";
 
 const Login = (): JSX.Element => {
   const { user, setUser } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>(user);
-  const [userErrors, setUserErrors] = React.useState<Array<string>>([]);
+  const { validateSchemes, setUserErrors, userErrors } = useErrors();
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
 
@@ -22,10 +24,7 @@ const Login = (): JSX.Element => {
 
   const signIn = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setUserErrors([]);
-    const isValid = await loginScheme.validate(userForm, { abortEarly: false }).catch((err) => err.errors);
-    if (Array.isArray(isValid)) return setUserErrors(isValid);
-    // If not valid return and show errors.
+    if (await validateSchemes(loginScheme, userForm)) return;
     try {
       setLoading(true);
       const res = await UserService.login(userForm);
@@ -41,7 +40,7 @@ const Login = (): JSX.Element => {
 
   return (
     <>
-      <AuthPage title={"Sign In"} new={"Sign Up"} userErrors={userErrors}>
+      <AuthPage title={"Sign In"} new={"Sign Up"}>
         <form className="auth__form">
           <div className="auth__input">
             <TextField label="Email Address" onChange={handleChange("email")} type="email" autoComplete="email" />
@@ -55,6 +54,7 @@ const Login = (): JSX.Element => {
             </Button>
           </div>
         </form>
+        <UserErrors userErrors={userErrors} />
       </AuthPage>
     </>
   );

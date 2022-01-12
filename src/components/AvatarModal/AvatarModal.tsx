@@ -5,6 +5,8 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { Button, TextField } from "@mui/material";
 import { useUserContext } from "../../store/user";
+import UserErrors from "../UserErrors/UserErrors";
+import avatarPlaceHolder from "../../assets/images/avatar.svg";
 import "./AvatarModal.scss";
 
 interface IModal {
@@ -12,11 +14,27 @@ interface IModal {
   setToggleModal: (toggle: boolean) => void;
   handleChange: (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   updateUserAvatar: () => void;
-  userErrors: Array<string>;
+  resetUserAvatar: () => void;
+  imageInputForm: string;
+  userErrors: string[];
 }
 
-const AvatarModal: FC<IModal> = ({ toggleModal, setToggleModal, handleChange, updateUserAvatar, userErrors }): JSX.Element => {
+const AvatarModal: FC<IModal> = ({
+  toggleModal,
+  setToggleModal,
+  handleChange,
+  updateUserAvatar,
+  resetUserAvatar,
+  imageInputForm,
+  userErrors,
+}): JSX.Element => {
   const { user } = useUserContext();
+
+  const handleDisabledButton = (condition1: any, condition2: any): boolean => {
+    if (!imageInputForm) return true;
+    if (condition1 === condition2) return true;
+    return false;
+  };
 
   return (
     <Modal
@@ -34,23 +52,18 @@ const AvatarModal: FC<IModal> = ({ toggleModal, setToggleModal, handleChange, up
         <Box className="modal">
           <TextField
             name="avatar"
-            defaultValue={user.avatar}
+            value={imageInputForm}
             label={"Avatar URL"}
             onChange={handleChange("avatar")}
             spellCheck={false}
             autoComplete="off"
           />
-          {userErrors.length ? (
-            <ul className="auth__errors" style={{ alignItems: "center" }}>
-              {userErrors.map((err: string, index: number) => (
-                <li key={index} className="auth__error">
-                  {err}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <Button variant="contained" onClick={updateUserAvatar}>
+          <UserErrors userErrors={userErrors} />
+          <Button variant="contained" onClick={updateUserAvatar} disabled={handleDisabledButton(imageInputForm, user.avatar)}>
             Save
+          </Button>
+          <Button variant="contained" onClick={resetUserAvatar} disabled={handleDisabledButton(avatarPlaceHolder, user.avatar)}>
+            Reset to default
           </Button>
         </Box>
       </Fade>
