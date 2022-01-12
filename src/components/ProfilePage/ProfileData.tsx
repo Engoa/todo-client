@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Avatar, Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Avatar, Button, IconButton, ListItemIcon, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -10,23 +10,35 @@ import { IUser } from "../../types/User";
 import { useLoaderContext } from "../../store/loader";
 import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
-import { differenceBetweenObjects } from "../../helpers/utils";
+import { differenceBetweenObjects, isMobile } from "../../helpers/utils";
 import AvatarModal from "../AvatarModal/AvatarModal";
 import EditIcon from "@mui/icons-material/Edit";
 import UserErrors from "../UserErrors/UserErrors";
 import useErrors from "../../hooks/useErrors";
 import isEqual from "lodash/isEqual";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import "./ProfileData.scss";
 
 const ProfileData: FC = (): JSX.Element => {
   const navigate = useNavigate();
 
-  const { user, setUser } = useUserContext();
+  const { user, setUser, logout } = useUserContext();
   const { setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
   const { validateSchemes, setUserErrors, userErrors } = useErrors();
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const [toggleModal, setToggleModal] = React.useState<boolean>(false);
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserForm({ ...userForm, [key]: event.target.value.trim() });
@@ -46,6 +58,20 @@ const ProfileData: FC = (): JSX.Element => {
       const updatedUser = Object.assign(user, updatedFields);
       setUser(updatedUser);
       toggleSnackBar("User updated successfully");
+    } catch (err: any) {
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteUserHandler = async () => {
+    try {
+      setLoading(true);
+      await UserService.deleteUser(user._id);
+      logout();
+      toggleSnackBar("User deleted successfully");
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
       else setUserErrors(["An error occured, please try again later"]);
@@ -101,7 +127,7 @@ const ProfileData: FC = (): JSX.Element => {
           </IconButton>
         </Tooltip>
         <h1>My Account</h1>
-        <IconButton>
+        <IconButton onClick={handleMenuClick}>
           <MoreHorizIcon />
         </IconButton>
       </div>
@@ -169,6 +195,23 @@ const ProfileData: FC = (): JSX.Element => {
         </div>
       </div>
       <UserErrors userErrors={userErrors} />
+      <Menu
+        className="delete__user"
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={menuOpen}
+        onClose={handleMenuClose}
+        onClick={handleMenuClose}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={deleteUserHandler}>
+          <ListItemIcon>
+            <PersonRemoveIcon fontSize="small" />
+          </ListItemIcon>
+          Delete Account
+        </MenuItem>
+      </Menu>
     </>
   );
 };

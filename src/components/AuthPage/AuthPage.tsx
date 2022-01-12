@@ -3,9 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import { authPageAnimation } from "../../animations/animations";
-import UserErrors from "../UserErrors/UserErrors";
 import "./AuthPage.scss";
-import useErrors from "../../hooks/useErrors";
 
 interface Props {
   title: string;

@@ -10,8 +10,8 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
 import { Link } from "react-router-dom";
-import "./Navbar.scss";
 import { isMobile } from "../../helpers/utils";
+import "./Navbar.scss";
 
 const Navbar = () => {
   const { user, logout } = useUserContext();

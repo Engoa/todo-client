@@ -18,4 +18,7 @@ export class UserService {
   static updateUserImage(userId: IUser, src: IUser): Promise<IUser> {
     return this.api.patch(`/users/${userId}`, src).then((res) => res.data);
   }
+  static deleteUser(userId: IUser): Promise<IUser> {
+    return this.api.delete(`/users/${userId}`).then((res) => res.data);
+  }
 }
