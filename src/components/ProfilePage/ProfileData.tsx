@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Avatar, Button, IconButton, TextField, Tooltip } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -12,7 +12,6 @@ import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
 import { differenceBetweenObjects } from "../../helpers/utils";
 import AvatarModal from "../AvatarModal/AvatarModal";
-import avatarPlaceHolder from "../../assets/images/avatar.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import UserErrors from "../UserErrors/UserErrors";
 import useErrors from "../../hooks/useErrors";
@@ -36,12 +35,6 @@ const ProfileData: FC = (): JSX.Element => {
   const toggleModalHandler = () => {
     setToggleModal(!toggleModal);
     setUserErrors([]);
-  };
-
-  const onImageBroken = (e: any) => {
-    e.target.src = avatarPlaceHolder;
-    setUser({ ...user, avatar: avatarPlaceHolder });
-    toggleSnackBar("Image link is broken, resetting to default");
   };
 
   const updateUser = async () => {
@@ -80,7 +73,7 @@ const ProfileData: FC = (): JSX.Element => {
   };
 
   const resetUserAvatar = async () => {
-    updateAvatar(avatarPlaceHolder);
+    updateAvatar("");
     setUserForm({ ...userForm, avatar: "" });
   };
 
@@ -88,6 +81,7 @@ const ProfileData: FC = (): JSX.Element => {
   React.useEffect(() => {
     profilePageAnimation(profilePageRef);
   }, []);
+
   return (
     <>
       <AvatarModal
@@ -113,7 +107,9 @@ const ProfileData: FC = (): JSX.Element => {
       </div>
       <div className="profile__mid" ref={profilePageRef}>
         <div className="profile__mid--img" onClick={toggleModalHandler}>
-          <img src={!user.avatar ? avatarPlaceHolder : user.avatar} alt="User Image" onError={onImageBroken} />
+          <IconButton>
+            <Avatar src={user.avatar} sx={{ width: 200, height: 200 }} />
+          </IconButton>
           <div className="profile__mid--img--icon">
             <EditIcon fontSize="small" />
           </div>

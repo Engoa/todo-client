@@ -6,7 +6,6 @@ import Fade from "@mui/material/Fade";
 import { Button, TextField } from "@mui/material";
 import { useUserContext } from "../../store/user";
 import UserErrors from "../UserErrors/UserErrors";
-import avatarPlaceHolder from "../../assets/images/avatar.svg";
 import "./AvatarModal.scss";
 
 interface IModal {
@@ -62,7 +61,7 @@ const AvatarModal: FC<IModal> = ({
           <Button variant="contained" onClick={updateUserAvatar} disabled={handleDisabledButton(imageInputForm, user.avatar)}>
             Save
           </Button>
-          <Button variant="contained" onClick={resetUserAvatar} disabled={handleDisabledButton(avatarPlaceHolder, user.avatar)}>
+          <Button variant="contained" onClick={resetUserAvatar} disabled={handleDisabledButton("", user.avatar)}>
             Reset to default
           </Button>
         </Box>

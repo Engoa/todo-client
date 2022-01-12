@@ -11,6 +11,7 @@ import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
+import { isMobile } from "../../helpers/utils";
 
 const Navbar = () => {
   const { user, logout } = useUserContext();
@@ -41,7 +42,6 @@ const Navbar = () => {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
@@ -59,15 +59,15 @@ const Navbar = () => {
         PaperProps={{
           elevation: 1,
           sx: {
+            mt: 1,
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1,
             "&:before": {
               content: '""',
               display: "block",
               position: "absolute",
               top: 0,
-              right: 20,
+              right: isMobile ? 17 : 42,
               width: 10,
               height: 10,
               bgcolor: "#e0e0e0",
@@ -84,7 +84,7 @@ const Navbar = () => {
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
-            User Settings
+            Account Settings
           </MenuItem>
         </Link>
         <MenuItem onClick={logout}>

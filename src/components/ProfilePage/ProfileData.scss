@@ -8,7 +8,6 @@
   max-width: 550px;
   padding: 1rem;
   margin: auto;
-  height: 100vh;
 
   &__top {
     display: flex;
@@ -50,29 +49,15 @@
       flex-direction: column;
     }
     &--img {
-      width: 180px;
-      min-width: 180px;
-      min-height: 180px;
-      border-radius: 50%;
-      align-self: center;
-      display: flex;
       position: relative;
-      cursor: pointer;
-      border: 2px solid white;
       transition: $transition-250;
       will-change: transform;
-      img {
-        border-radius: 50%;
-        width: 100%;
-        padding: 3px;
-        object-fit: cover;
-        object-position: center;
-      }
+      cursor: pointer;
 
       &--icon {
         position: absolute;
-        right: 0.8rem;
-        top: 1rem;
+        right: 1.5rem;
+        top: 1.5rem;
         width: 26px;
         height: 26px;
         border-radius: 50%;
@@ -96,12 +81,16 @@
     }
 
     &--name {
+      min-width: 270px;
+      @include media("<smd") {
+        min-width: unset;
+        text-align: center;
+      }
       span {
         font-size: 1.8rem;
         font-weight: bold;
         text-transform: capitalize;
         @include media("<smd") {
-          text-align: center;
         }
       }
     }
