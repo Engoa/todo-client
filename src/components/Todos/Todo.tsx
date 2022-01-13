@@ -15,7 +15,7 @@ import "./Todos.scss";
 const Todo: FC = (): JSX.Element => {
   const { user } = useUserContext();
   const { todos, todoForm, addTodo, finishTodo, deleteTodo, handleChange } = useTodosContext();
-  const todosRef = React.useRef<Array<any>>([]);
+  const todosRef = React.useRef<Array<HTMLDivElement>>([]);
   todosRef.current = [];
 
   React.useEffect(() => {
@@ -33,7 +33,6 @@ const Todo: FC = (): JSX.Element => {
   };
 
   const incompleteTodos = todos.filter((todo: ITodo) => !todo.completed);
-  const completedTodos = todos.filter((todo: ITodo) => todo.completed);
 
   const HandleTitle: FC<IHandleTitle> = React.memo<IHandleTitle>(({ userName, todoLength }) => {
     if (!incompleteTodos.length) {

@@ -1,13 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { IUser } from "../types/User";
+import { IUser, UserContent } from "../types/User";
 import { useTodosContext } from "./todos";
-
-export type UserContent = {
-  user: IUser;
-  isLoggedIn: boolean;
-  setUser: (user: IUser) => void;
-  logout: () => void;
-};
 
 export const UserContext = createContext<UserContent>({} as UserContent);
 export const useUserContext = () => useContext(UserContext);

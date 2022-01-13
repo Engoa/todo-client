@@ -11,12 +11,15 @@ import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
 import { Link } from "react-router-dom";
 import { isMobile } from "../../helpers/utils";
+import { userAvatarAnimation } from "../../animations/animations";
 import "./Navbar.scss";
 
 const Navbar = () => {
   const { user, logout } = useUserContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const avatarRef = React.useRef();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,6 +29,9 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  React.useEffect(() => {
+    userAvatarAnimation(avatarRef);
+  }, []);
   return (
     <div className="nav">
       <Box
@@ -40,6 +46,7 @@ const Navbar = () => {
       >
         <Tooltip title="Account" arrow>
           <IconButton
+            ref={avatarRef}
             onClick={handleClick}
             size="small"
             aria-controls={open ? "account-menu" : undefined}

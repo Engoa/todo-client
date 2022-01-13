@@ -1,9 +1,5 @@
 import React, { createContext, useContext } from "react";
-
-export type LoaderContent = {
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-};
+import { LoaderContent } from "../types/Loader";
 
 export const LoaderContext = createContext<LoaderContent>({} as LoaderContent);
 export const useLoaderContext = () => useContext(LoaderContext);

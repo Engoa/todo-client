@@ -5,10 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useSnackBarContext } from "../../store/snackbar";
 import "./SimpleSnackBar.scss";
 
-interface ISnackbar {
-  message?: string;
-}
-const SimpleSnackBar: FC<ISnackbar> = (): JSX.Element => {
+const SimpleSnackBar: FC = (): JSX.Element => {
   const { openSnackBar, setOpenSnackBar, message } = useSnackBarContext();
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {

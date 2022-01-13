@@ -1,9 +1,14 @@
 import { createTheme, ThemeOptions } from "@mui/material";
 import { isMobile } from "../helpers/utils";
+import { grey, red } from "@mui/material/colors";
 
 const theme: ThemeOptions = {
   palette: {
     mode: "dark",
+    primary: {
+      main: grey[300],
+      dark: red[700],
+    },
   },
   components: {
     MuiTextField: {

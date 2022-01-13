@@ -12,3 +12,10 @@ export type IUser = {
 export type ISignup = {
   password?: string;
 } & Partial<IUser>;
+
+export type UserContent = {
+  user: IUser;
+  isLoggedIn: boolean;
+  setUser: (user: IUser) => void;
+  logout: () => void;
+};
