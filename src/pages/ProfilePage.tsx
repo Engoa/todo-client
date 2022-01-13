@@ -6,6 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 const ProfilePage: FC = (): JSX.Element => {
   const { logout } = React.useContext(UserContext);
+
   return (
     <div className="profile">
       <ProfileData />

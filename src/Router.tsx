@@ -32,7 +32,7 @@ const Router: FC = ({ children }) => {
         <Routes>
           <Route path="/">
             {isLoggedIn && <Route path="/" element={<Layout />} />}
-            {isLoggedIn && <Route path="profile" element={<ProfilePage />} />}
+            {isLoggedIn && <Route path="profile/:id" element={<ProfilePage />} />}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<PageNotFound />} />
