@@ -4,29 +4,22 @@ import ProfileData from "../components/ProfilePage/ProfileData";
 import { UserContext } from "../store/user";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useParams } from "react-router-dom";
-import PageNotFound from "../components/PageNotFound/PageNotFound";
 
 const ProfilePage: FC = (): JSX.Element => {
   const { logout, user } = React.useContext(UserContext);
   const params = useParams();
 
   return (
-    <>
-      {params.id !== user.firstName.toLowerCase() ? (
-        <PageNotFound />
-      ) : (
-        <div className="profile">
-          <ProfileData />
-          <div className="profile__bottom__logout">
-            <Tooltip title="Logout" arrow>
-              <IconButton onClick={logout}>
-                <LogoutIcon />
-              </IconButton>
-            </Tooltip>
-          </div>
-        </div>
-      )}
-    </>
+    <div className="profile">
+      <ProfileData />
+      <div className="profile__bottom__logout">
+        <Tooltip title="Logout" arrow>
+          <IconButton onClick={logout}>
+            <LogoutIcon />
+          </IconButton>
+        </Tooltip>
+      </div>
+    </div>
   );
 };
 

@@ -10,7 +10,6 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
 import { Link } from "react-router-dom";
-import { isMobile } from "../../helpers/utils";
 import { userAvatarAnimation } from "../../animations/animations";
 import "./Navbar.scss";
 
@@ -63,30 +62,10 @@ const Navbar = () => {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        PaperProps={{
-          elevation: 1,
-          sx: {
-            mt: 1,
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: isMobile ? 17 : 42,
-              width: 10,
-              height: 10,
-              bgcolor: "#e0e0e0",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
         transformOrigin={{ horizontal: "left", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Link to={`/profile/${user.firstName.toLowerCase()}`}>
+        <Link to={`/profile`}>
           <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />

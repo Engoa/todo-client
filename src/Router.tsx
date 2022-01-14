@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-route
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import ProfilePage from "./pages/ProfilePage";
 import { checkRoute } from "./helpers/utils";
-import Layout from "./Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Layout from "./pages/Layout";
 import { useUserContext } from "./store/user";
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
@@ -32,7 +32,7 @@ const Router: FC = ({ children }) => {
         <Routes>
           <Route path="/">
             {isLoggedIn && <Route path="/" element={<Layout />} />}
-            {isLoggedIn && <Route path="profile/:id" element={<ProfilePage />} />}
+            {isLoggedIn && <Route path="profile" element={<ProfilePage />} />}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<PageNotFound />} />
