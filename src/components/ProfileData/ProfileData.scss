@@ -1,10 +1,6 @@
 @import "../../styles/import.scss";
 .profile {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 2.5rem;
+  height: 100vh;
   max-width: 550px;
   padding: 1rem;
   margin: auto;
@@ -37,6 +33,15 @@
         }
       }
     }
+  }
+  .mid__bottom__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 2.5rem;
   }
 
   &__mid {
@@ -81,17 +86,38 @@
       }
     }
 
-    &--name {
-      min-width: 270px;
-      @include media("<smd") {
-        min-width: unset;
-        text-align: center;
-      }
-      span {
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-transform: capitalize;
+    &__user {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      &--name {
+        min-width: 270px;
         @include media("<smd") {
+          min-width: unset;
+          text-align: center;
+        }
+        span {
+          font-size: 1.8rem;
+          font-weight: bold;
+          text-transform: capitalize;
+        }
+      }
+
+      &--country {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.2rem;
+        width: 100%;
+        @include media("<smd") {
+          text-align: center;
+          justify-content: center;
+        }
+        span {
+          font-size: 0.9rem;
+          text-transform: capitalize;
+          opacity: 0.7;
         }
       }
     }
