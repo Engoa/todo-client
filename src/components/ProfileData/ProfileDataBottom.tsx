@@ -3,6 +3,7 @@ import { Button, TextField, Tooltip, IconButton } from "@mui/material";
 import isEqual from "lodash/isEqual";
 import { IUser } from "../../types/User";
 import LogoutIcon from "@mui/icons-material/Logout";
+import UserErrors from "../UserErrors/UserErrors";
 
 interface IProfileDataBottom {
   user: IUser;
@@ -10,9 +11,10 @@ interface IProfileDataBottom {
   handleChange: (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   updateUser: () => void;
   logout: () => void;
+  userErrors: string[];
 }
 
-const ProfileDataBottom: FC<IProfileDataBottom> = ({ user, handleChange, userForm, updateUser, logout }): JSX.Element => {
+const ProfileDataBottom: FC<IProfileDataBottom> = ({ user, handleChange, userForm, updateUser, logout, userErrors }): JSX.Element => {
   return (
     <>
       <div className="profile__bottom">
@@ -64,6 +66,9 @@ const ProfileDataBottom: FC<IProfileDataBottom> = ({ user, handleChange, userFor
             </div>
           </div>
         </div>
+      </div>
+      <div className="profile__bottom__errors">
+        <UserErrors userErrors={userErrors} />
       </div>
       <div className="profile__bottom__logout">
         <Tooltip title="Logout" arrow>

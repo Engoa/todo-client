@@ -8,7 +8,6 @@ import { useSnackBarContext } from "../../store/snackbar";
 import { profilePageAnimation } from "../../animations/animations";
 import { differenceBetweenObjects } from "../../helpers/utils";
 import AvatarModal from "../AvatarModal/AvatarModal";
-import UserErrors from "../UserErrors/UserErrors";
 import useErrors from "../../hooks/useErrors";
 import ProfileDataBottom from "./ProfileDataBottom";
 import ProfileDataMid from "./ProfileDataMid";
@@ -96,9 +95,15 @@ const ProfileData: FC = (): JSX.Element => {
       <ProfileDataTop deleteUserHandler={deleteUserHandler} />
       <section className="mid__bottom__wrapper">
         <ProfileDataMid profilePageRef={profilePageRef} toggleModalHandler={toggleModalHandler} user={user} />
-        <ProfileDataBottom user={user} handleChange={handleChange} userForm={userForm} updateUser={updateUser} logout={logout} />
+        <ProfileDataBottom
+          user={user}
+          handleChange={handleChange}
+          userForm={userForm}
+          updateUser={updateUser}
+          logout={logout}
+          userErrors={userErrors}
+        />
       </section>
-      <UserErrors userErrors={userErrors} />
       <AvatarModal
         toggleModal={toggleModal}
         setToggleModal={toggleModalHandler}

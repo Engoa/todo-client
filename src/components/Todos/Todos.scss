@@ -11,20 +11,19 @@
 .todos {
   &__user--title {
     align-self: flex-start;
-    letter-spacing: 0.085em;
-    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    font-size: 1.1rem;
     opacity: 0.7;
-
-    @include media("<smd") {
-      align-self: center;
-      letter-spacing: 0.05em;
-      font-size: 0.9rem;
-    }
-
+    font-weight: lighter;
     .title--headings {
       font-weight: bold;
       text-transform: capitalize;
       color: #e21a24;
+    }
+
+    @include media("<smd") {
+      align-self: center;
+      font-size: 0.8rem;
     }
   }
   &__add {
