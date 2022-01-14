@@ -11,7 +11,6 @@ import Logout from "@mui/icons-material/Logout";
 import { useUserContext } from "../../store/user";
 import { Link } from "react-router-dom";
 import { userAvatarAnimation } from "../../animations/animations";
-import "./Navbar.scss";
 
 const Navbar = () => {
   const { user, logout } = useUserContext();
@@ -62,7 +61,7 @@ const Navbar = () => {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        transformOrigin={{ horizontal: "left", vertical: "top" }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Link to={`/profile`}>

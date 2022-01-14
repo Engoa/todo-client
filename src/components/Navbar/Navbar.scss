@@ -1,9 +1,0 @@
-@import "../../styles/import.scss";
-
-.nav {
-  padding: 0.2rem 1rem;
-
-  @include media("<smd") {
-    padding: 0.5rem;
-  }
-}

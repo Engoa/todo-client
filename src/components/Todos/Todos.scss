@@ -7,7 +7,6 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  padding: 1rem;
 }
 .todos {
   &__user--title {
@@ -15,6 +14,7 @@
     letter-spacing: 0.085em;
     font-size: 1.2rem;
     opacity: 0.7;
+
     @include media("<smd") {
       align-self: center;
       letter-spacing: 0.05em;
@@ -59,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    font-family: $ff-main !important;
 
     &--title {
       white-space: nowrap;
@@ -87,10 +88,9 @@
     }
     &--date {
       span {
-        font-size: 0.8rem;
-        font-weight: bold;
+        font-size: 0.75rem;
         @include media("<smd") {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
         }
       }
       :first-child {

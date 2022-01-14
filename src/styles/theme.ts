@@ -42,6 +42,7 @@ const theme: ThemeOptions = {
           color: "white",
           padding: "12px",
           transition: "all 250ms ease",
+
           ":hover": {
             background: "rgba(255,255,255)",
             color: "black",
@@ -65,6 +66,7 @@ const theme: ThemeOptions = {
         root: {
           background: "#e50914",
           color: "white",
+          fontFamily: "Montserrat",
           ":hover": {
             background: "#ad2027",
             color: "black",
@@ -107,17 +109,35 @@ const theme: ThemeOptions = {
           overflowWrap: "anywhere",
           overflow: "hidden",
           borderTop: "2px solid #e50914",
+          fontFamily: "Montserrat",
+        },
+      },
+    },
+
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Montserrat",
         },
       },
     },
     MuiAccordionSummary: {
       styleOverrides: {
         root: {
-          height: "90px",
+          height: "100%",
+          maxHeight: "90px",
+          fontFamily: "Montserrat",
         },
       },
     },
 
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontFamily: "Montserrat",
+        },
+      },
+    },
     MuiPopover: {
       styleOverrides: {
         paper: {
