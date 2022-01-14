@@ -50,17 +50,17 @@ const ProfileData: FC = (): JSX.Element => {
   };
 
   const deleteUserHandler = async () => {
-    // try {
-    //   setLoading(true);
-    //   await UserService.deleteUser(user._id);
-    //   logout();
-    //   toggleSnackBar("User deleted successfully");
-    // } catch (err: any) {
-    //   if (!!err.response) setUserErrors([err.response.data.message]);
-    //   else setUserErrors(["An error occured, please try again later"]);
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      setLoading(true);
+      await UserService.deleteUser(user._id);
+      logout();
+      toggleSnackBar("User deleted successfully");
+    } catch (err: any) {
+      if (!!err.response) setUserErrors([err.response.data.message]);
+      else setUserErrors(["An error occured, please try again later"]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateAvatar = async (avatar: string) => {

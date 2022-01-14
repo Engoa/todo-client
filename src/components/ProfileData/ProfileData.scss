@@ -1,9 +1,12 @@
 @import "../../styles/import.scss";
 .profile {
-  height: 100vh;
   max-width: 550px;
   padding: 1rem;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  height: 100%;
 
   &__top {
     display: flex;
@@ -41,6 +44,7 @@
     align-items: center;
     height: 100%;
     width: 100%;
+    gap: 2.5rem;
   }
 
   &__mid {
