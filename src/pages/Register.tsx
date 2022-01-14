@@ -33,7 +33,7 @@ const Register: FC<Props> = (): JSX.Element => {
       setLoading(true);
       const res = await UserService.signup(userForm);
       setUser(res);
-      toggleSnackBar(`Hi ${capitilizeFirstLetter(res?.firstName)}, you've successfully registered!`);
+      toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, you've successfully registered!`);
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
       else setUserErrors(["An error occured, please try again later"]);

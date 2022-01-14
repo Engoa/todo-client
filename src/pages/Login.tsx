@@ -12,14 +12,17 @@ import useErrors from "../hooks/useErrors";
 import UserErrors from "../components/UserErrors/UserErrors";
 
 const Login = (): JSX.Element => {
-  const { user, setUser } = useUserContext();
-  const [userForm, setUserForm] = React.useState<IUser>(user);
+  const { setUser } = useUserContext();
+  const [userForm, setUserForm] = React.useState<IUser>({
+    email: "",
+    password: "",
+  });
   const { validateSchemes, setUserErrors, userErrors } = useErrors();
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
 
-  const handleChange = (prop: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserForm({ ...userForm, [prop]: event.target.value });
+  const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserForm({ ...userForm, [key]: event.target.value });
   };
 
   const signIn = async (e: SyntheticEvent) => {
@@ -33,6 +36,7 @@ const Login = (): JSX.Element => {
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
       else setUserErrors(["An error occured, please try again later"]);
+      setUserForm({ ...userForm, password: "" });
     } finally {
       setLoading(false);
     }
@@ -46,7 +50,13 @@ const Login = (): JSX.Element => {
             <TextField label="Email Address" onChange={handleChange("email")} type="email" autoComplete="email" />
           </div>
           <div className="auth__input">
-            <TextField label="Password" onChange={handleChange("password")} type="password" autoComplete="current-password" />
+            <TextField
+              label="Password"
+              onChange={handleChange("password")}
+              type="password"
+              autoComplete="current-password"
+              value={userForm.password}
+            />
           </div>
           <div className="auth__submit">
             <Button type="submit" variant="contained" onClick={signIn} disabled={loading}>

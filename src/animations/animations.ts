@@ -11,7 +11,7 @@ const scaleAnim = (ref: RefObject<HTMLDivElement>) => {
 
 export const tasksAnimations = (ref: RefObject<any>) => {
   if (ref.current.length) {
-    gsap.to(ref.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.2 }).totalDuration(0.7);
+    gsap.to(ref.current, { autoAlpha: 1, x: 0, filter: "blur(0px)", opacity: 1, stagger: 0.2 }).totalDuration(0.6);
   }
 };
 export const userAvatarAnimation = (ref: RefObject<HTMLDivElement>) => {

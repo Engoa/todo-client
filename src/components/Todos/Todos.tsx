@@ -26,7 +26,7 @@ const Todos: FC = (): JSX.Element => {
       setLoading(false);
     }
   };
-  return <main className={!fetchError ? "todos__wrapper" : "error--wrapper"}>{!fetchError ? <Todo /> : <FetchError />}</main>;
+  return <main className="todos__wrapper">{!fetchError ? <Todo /> : <FetchError />}</main>;
 };
 
 export default Todos;

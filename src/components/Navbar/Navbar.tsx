@@ -86,7 +86,7 @@ const Navbar = () => {
         transformOrigin={{ horizontal: "left", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Link to={`/profile/${user._id}`}>
+        <Link to={`/profile/${user.firstName.toLowerCase()}`}>
           <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />
