@@ -1,0 +1,21 @@
+@import "../../styles/import.scss";
+.go__to__top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  will-change: background-color;
+  button {
+    transition: $transition-250;
+    background: #ffffff23 !important;
+    &:hover {
+      background: darken(#ffffff14, 5%) !important;
+    }
+  }
+
+  @include media("<xxl") {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 1rem;
+  }
+}

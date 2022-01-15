@@ -26,7 +26,11 @@ const Todos: FC = (): JSX.Element => {
       setLoading(false);
     }
   };
-  return <main className="layout--wrapper">{!fetchError ? <Todo results={searchResults.length ? searchResults : todos} /> : <FetchError />}</main>;
+  return (
+    <>
+      <main className="layout--wrapper">{!fetchError ? <Todo results={searchResults.length ? searchResults : todos} /> : <FetchError />}</main>
+    </>
+  );
 };
 
 export default Todos;

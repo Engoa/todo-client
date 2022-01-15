@@ -155,9 +155,9 @@
 }
 .action {
   transition: $transition-250;
+  will-change: transform;
   &:hover {
     transform: scale(1.1);
-    color: #e21a24;
   }
 }
 
@@ -166,9 +166,11 @@
   transform: translateX(-100%);
   opacity: 0.2;
   filter: blur(5px);
+  will-change: background-color;
 }
 
 .completed {
+  will-change: background-color;
   background: rgba(101, 165, 101, 0.692) !important;
   transition: $transition-250 !important;
 }

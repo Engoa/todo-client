@@ -127,6 +127,7 @@ const theme: ThemeOptions = {
           height: "100%",
           maxHeight: "90px",
           fontFamily: "Montserrat",
+          willChange: "transform, opacity",
         },
       },
     },

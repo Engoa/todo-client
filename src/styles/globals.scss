@@ -15,12 +15,9 @@ body,
   font-size: 16px;
   background: #111114;
   color: white;
-  height: 100%;
   width: 100%;
   overflow-x: hidden;
-}
-body {
-  overflow-y: scroll !important;
+  padding: 0 !important;
 }
 
 .Layout {

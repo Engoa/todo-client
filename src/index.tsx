@@ -10,6 +10,7 @@ import { SnackBarProvider } from "./store/snackbar";
 import Spinner from "./components/Spinner/Spinner";
 import SimpleSnackBar from "./components/SimpleSnackBar/SimpleSnackBar";
 import "./styles/globals.scss";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 ReactDOM.render(
   <LoaderProvider>
@@ -20,6 +21,7 @@ ReactDOM.render(
             <Router />
             <Spinner />
             <SimpleSnackBar />
+            <ScrollToTop />
           </ThemeProvider>
         </UserProvider>
       </TodosProvider>
