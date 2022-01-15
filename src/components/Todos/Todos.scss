@@ -1,6 +1,6 @@
 @import "../../styles/import.scss";
 
-.todos__wrapper {
+.layout--wrapper {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -8,7 +8,17 @@
   gap: 1rem;
   width: 100%;
 }
+
 .todos {
+  &--wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
   &__user--title {
     align-self: flex-start;
     letter-spacing: 0.05em;
@@ -31,12 +41,13 @@
     justify-content: flex-start;
     flex-direction: column;
     width: 100%;
-    gap: 2rem;
+    gap: 1rem;
 
     &__inputs {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-direction: column;
       width: 100%;
       gap: 1rem;
       input {
@@ -46,6 +57,10 @@
     }
     .input--wrapper {
       width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
     }
     button {
       width: 100%;
@@ -102,6 +117,41 @@
     justify-content: space-evenly;
     width: 100%;
   }
+
+  &__search {
+    position: relative;
+    input {
+      max-width: 1000px;
+      @include media("<smd") {
+        max-width: 180px;
+      }
+    }
+    &--results {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      span {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        @include media("<smd") {
+          font-size: 0.7rem;
+        }
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -1.7rem;
+      height: 2px;
+      width: 100%;
+      border-radius: 50%;
+      background: #e21a242d;
+      border-radius: 3rem;
+    }
+  }
 }
 .action {
   transition: $transition-250;
@@ -114,9 +164,10 @@
 .todo {
   transition: $transition-250 !important;
   transform: translateX(-100%);
-  opacity: 0;
+  opacity: 0.2;
   filter: blur(5px);
 }
+
 .completed {
   background: rgba(101, 165, 101, 0.692) !important;
   transition: $transition-250 !important;

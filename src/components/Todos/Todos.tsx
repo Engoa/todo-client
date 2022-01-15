@@ -7,7 +7,7 @@ import Todo from "./Todo";
 import "./Todos.scss";
 
 const Todos: FC = (): JSX.Element => {
-  const { todos, setTodos } = useTodosContext();
+  const { todos, setTodos, searchResults } = useTodosContext();
   const { setLoading } = useLoaderContext();
   const [fetchError, setFetchError] = React.useState<boolean>(false);
 
@@ -26,7 +26,7 @@ const Todos: FC = (): JSX.Element => {
       setLoading(false);
     }
   };
-  return <main className="todos__wrapper">{!fetchError ? <Todo /> : <FetchError />}</main>;
+  return <main className="layout--wrapper">{!fetchError ? <Todo results={searchResults.length ? searchResults : todos} /> : <FetchError />}</main>;
 };
 
 export default Todos;

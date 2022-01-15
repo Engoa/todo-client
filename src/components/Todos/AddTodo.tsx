@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import { TextField, Button } from "@mui/material";
 import { useTodosContext } from "../../store/todos";
 import { useUserContext } from "../../store/user";
@@ -42,7 +42,7 @@ const AddTodo: FC = (): JSX.Element => {
       <p className="todos__user--title">
         <HandleTitle userName={user.firstName} />
       </p>
-      <div className="todos__add__inputs">
+      <form className="todos__add__inputs">
         <div className="input--wrapper">
           <TextField
             label="The title of your task"
@@ -52,8 +52,6 @@ const AddTodo: FC = (): JSX.Element => {
             autoComplete="off"
             spellCheck={false}
           />
-        </div>
-        <div className="input--wrapper">
           <TextField
             label="Describe your task"
             onChange={handleChange("text")}
@@ -64,12 +62,15 @@ const AddTodo: FC = (): JSX.Element => {
             spellCheck={false}
           />
         </div>
-      </div>
-      <div className="input--wrapper">
-        <Button variant="contained" onClick={() => addTodo(todoForm)} disabled={!todoForm.text || !todoForm.title ? true : false}>
+        <Button
+          variant="contained"
+          type="submit"
+          onClick={(e: SyntheticEvent) => addTodo(todoForm, e)}
+          disabled={!todoForm.text || !todoForm.title ? true : false}
+        >
           Add Todo
         </Button>
-      </div>
+      </form>
     </div>
   );
 };

@@ -3,15 +3,19 @@ import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField, T
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import dayjs from "dayjs";
 import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
 import { tasksAnimations } from "../../animations/animations";
 import AddTodo from "./AddTodo";
+import SearchBar from "../SearchBar/SearchBar";
 import "./Todos.scss";
+interface TodoProps {
+  results: ITodo[];
+}
 
-const Todo: FC = (): JSX.Element => {
+const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
   const { todos, finishTodo, deleteTodo } = useTodosContext();
   const todosRef = React.useRef<Array<HTMLDivElement>>([]);
   todosRef.current = [];
@@ -24,15 +28,16 @@ const Todo: FC = (): JSX.Element => {
 
   React.useEffect(() => {
     tasksAnimations(todosRef);
-  }, [todos]);
+  });
 
   return (
     <>
       <AddTodo />
+      {todos.length ? <SearchBar /> : null}
       {
-        <>
+        <div className="todos--wrapper">
           {todos &&
-            todos.map((todo: ITodo) => {
+            results.map((todo: ITodo) => {
               return (
                 <Accordion key={todo._id} className={todo.completed ? "completed todo" : "todo"} ref={addTodoRefs}>
                   <AccordionSummary expandIcon={<ExpandMoreRounded />} aria-controls="panel1a-content" id="panel1a-header">
@@ -56,13 +61,13 @@ const Todo: FC = (): JSX.Element => {
                               </IconButton>
                             </Tooltip>
                           </div>
-                          <div className="todos__actions__edit action">
+                          {/* <div className="todos__actions__edit action">
                             <Tooltip title="Edit" TransitionComponent={Zoom} placement="right" arrow>
                               <IconButton size="small">
                                 <EditIcon />
                               </IconButton>
                             </Tooltip>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="todos__details--date">
                           <Typography>
@@ -87,7 +92,7 @@ const Todo: FC = (): JSX.Element => {
                 </Accordion>
               );
             })}
-        </>
+        </div>
       }
     </>
   );

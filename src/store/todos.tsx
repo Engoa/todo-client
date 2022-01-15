@@ -14,17 +14,32 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
     completed: false,
   });
   const { toggleSnackBar } = useSnackBarContext();
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [searchResults, setSearchResults] = React.useState<Array<ITodo>>([]);
 
   const handleChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoForm({ ...todoForm, [key]: event.target.value });
   };
 
-  const addTodo = async (todoForm: ITodo) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    const results = todos.filter((todo) => todo.text.toLowerCase().includes(e.target.value.toLowerCase()));
+    setSearchResults(results);
+  };
+
+  const resetSearch = () => {
+    setSearchTerm("");
+    setSearchResults([]);
+  };
+
+  const addTodo = async (todoForm: ITodo, e: SyntheticEvent) => {
+    e.preventDefault();
     if (!todoForm.text || !todoForm.title) return;
     try {
       const res = await TodoService.addTodo(todoForm);
       setTodos([res, ...todos]);
       toggleSnackBar("Task added successfully");
+      resetSearch();
     } catch (err: any) {
       toggleSnackBar("An error occured while adding task");
       console.log(err);
@@ -62,6 +77,23 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
   };
 
   return (
-    <TodosContext.Provider value={{ todos, todoForm, setTodos, addTodo, finishTodo, deleteTodo, handleChange }}>{children}</TodosContext.Provider>
+    <TodosContext.Provider
+      value={{
+        todos,
+        todoForm,
+        searchTerm,
+        searchResults,
+        setSearchTerm,
+        setTodos,
+        addTodo,
+        finishTodo,
+        deleteTodo,
+        handleChange,
+        handleSearch,
+        setSearchResults,
+      }}
+    >
+      {children}
+    </TodosContext.Provider>
   );
 };

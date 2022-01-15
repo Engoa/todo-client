@@ -98,6 +98,7 @@
       align-items: flex-start;
       justify-content: center;
       flex-direction: column;
+      gap: 0.5rem;
       &--name {
         font-family: $ff-headings;
         min-width: 270px;
