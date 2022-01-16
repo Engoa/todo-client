@@ -3,7 +3,6 @@ import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSnackBarContext } from "../../store/snackbar";
-import "./SimpleSnackBar.scss";
 
 const SimpleSnackBar: FC = (): JSX.Element => {
   const { openSnackBar, setOpenSnackBar, message } = useSnackBarContext();

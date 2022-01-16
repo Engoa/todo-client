@@ -1,6 +1,7 @@
 import React from "react";
 import { CircularProgress } from "@mui/material";
 import { useLoaderContext } from "../../store/loader";
+import "./SimpleSnackBar.scss";
 
 const Spinner = () => {
   const { loading } = useLoaderContext();

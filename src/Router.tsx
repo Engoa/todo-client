@@ -7,9 +7,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 import { useUserContext } from "./store/user";
+import FetchError from "./components/FetchError/FetchError";
+import { useTodosContext } from "./store/todos";
 
 export const RequireAuth: FC = ({ children }: { children: JSX.Element }) => {
-  const { isLoggedIn, fetchUser } = useUserContext();
+  const { isLoggedIn, fetchUser, user } = useUserContext();
+  const { todos } = useTodosContext();
   let location = useLocation();
 
   useEffect(() => {
@@ -23,6 +26,8 @@ export const RequireAuth: FC = ({ children }: { children: JSX.Element }) => {
   else if (isLoggedIn && checkRoute(location.pathname)) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
+  // If no user exists, show error
+  if (typeof user !== "object" || !todos) return <FetchError />;
 
   return children;
 };
