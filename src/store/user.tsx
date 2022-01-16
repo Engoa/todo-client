@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { UserService } from "../services/user.service";
 import { IUser, UserContent } from "../types/User";
+import { useLoaderContext } from "./loader";
 import { useTodosContext } from "./todos";
 
 export const UserContext = createContext<UserContent>({} as UserContent);
@@ -17,15 +18,19 @@ export const getTokenFromLS = (): IUser => {
 export const UserProvider: React.FC = ({ children }): JSX.Element => {
   const [user, setUser] = React.useState<IUser>(getTokenFromLS() || {});
   const { todos, setTodos } = useTodosContext();
+  const { setLoading } = useLoaderContext();
   const isLoggedIn = !!localStorage.getItem("accessToken");
 
   const fetchUser = async () => {
     if (!isLoggedIn) return;
     try {
+      setLoading(true);
       const res = await UserService.getUserProfile();
       setUser(res);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 

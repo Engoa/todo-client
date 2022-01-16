@@ -26,6 +26,7 @@ body,
 
 :root {
   height: 100%;
+  @include scrollbar;
   overflow-y: scroll !important;
 }
 

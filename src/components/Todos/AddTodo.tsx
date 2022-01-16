@@ -42,7 +42,7 @@ const AddTodo: FC = (): JSX.Element => {
     <>
       <div className="todos__add">
         <div className="todos__user--title">
-          <HandleTitle userName={user.firstName} />
+          <HandleTitle userName={user?.firstName?.toLowerCase()} />
           <div className="todos__complete__all">
             <Button variant="contained" onClick={finishAll}>
               Complete All

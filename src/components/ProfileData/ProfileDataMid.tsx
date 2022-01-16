@@ -26,7 +26,7 @@ const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandle
 
         <div className="profile__mid__user">
           <div className="profile__mid__user--name">
-            <span>{`${user.firstName} ${user.lastName}`}</span>
+            <span>{`${user?.firstName?.toLowerCase()} ${user?.lastName?.toLowerCase()}`}</span>
           </div>
           <div className="profile__mid__user--country">
             <LocationOnIcon fontSize="inherit" />
