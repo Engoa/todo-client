@@ -32,7 +32,7 @@ const Login = (): JSX.Element => {
       setLoading(true);
       const res = await UserService.login(userForm);
       setToLS(res);
-      toggleSnackBar(`Hi ${capitilizeFirstLetter(user.firstName)}, It's good to have you back!`);
+      toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, It's good to have you back!`);
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
       else setUserErrors(["An error occured, please try again later"]);

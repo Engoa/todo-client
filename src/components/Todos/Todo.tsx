@@ -73,14 +73,12 @@ const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
                             <span>{dayjs(todo.createdAt).format("DD/MM/YYYY")}</span>
                           </Typography>
                         </div>
-                        {todo.createdAt === todo.updatedAt ? null : (
-                          <div className="todos__details--date">
-                            <Typography>
-                              <span>Updated: </span>
-                              <span>{dayjs(todo.updatedAt).format("DD/MM/YYYY")}</span>
-                            </Typography>
-                          </div>
-                        )}
+                        <div className="todos__details--date">
+                          <Typography>
+                            <span>Updated: </span>
+                            <span>{dayjs(todo.updatedAt).format("DD/MM/YYYY")}</span>
+                          </Typography>
+                        </div>
                       </div>
                     </div>
                   </AccordionSummary>

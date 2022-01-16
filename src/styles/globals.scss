@@ -25,6 +25,7 @@ body,
 }
 
 :root {
+  height: 100%;
   overflow-y: scroll !important;
 }
 
@@ -34,6 +35,6 @@ body,
   width: 100%;
   max-width: 1440px;
   margin: auto;
-  gap: 2rem;
+  gap: 1rem;
   padding: 1rem;
 }

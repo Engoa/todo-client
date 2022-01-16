@@ -6,7 +6,7 @@ export const ApiService = (url: string) => {
 
   instance.interceptors.request.use((request: any) => {
     const token = getTokenFromLS();
-    const isLoggedIn = !!localStorage.getItem("accessToken");
+    const isLoggedIn = token !== null;
 
     if (token && isLoggedIn) {
       request.headers.common.Authorization = `Bearer ${token}`;
