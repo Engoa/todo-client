@@ -4,6 +4,7 @@ import { useTodosContext } from "../../store/todos";
 import { useUserContext } from "../../store/user";
 import { ITodo } from "../../types/Todo";
 import SearchBar from "../SearchBar/SearchBar";
+import { isMobile } from "../../helpers/utils";
 
 const AddTodo: FC = (): JSX.Element => {
   const { user } = useUserContext();
@@ -43,11 +44,13 @@ const AddTodo: FC = (): JSX.Element => {
       <div className="todos__add">
         <div className="todos__user--title">
           <HandleTitle userName={user?.firstName?.toLowerCase()} />
-          <div className="todos__complete__all">
-            <Button variant="contained" onClick={finishAll}>
-              Complete All
-            </Button>
-          </div>
+          {isMobile ? null : (
+            <div className="todos__complete__all">
+              <Button variant="contained" onClick={finishAll}>
+                Complete All
+              </Button>
+            </div>
+          )}
         </div>
         <form className="todos__add__inputs">
           <div className="input--wrapper">
@@ -80,7 +83,7 @@ const AddTodo: FC = (): JSX.Element => {
           </Button>
         </form>
       </div>
-      {todos.length ? <SearchBar /> : null}
+      {isMobile ? null : todos.length ? <SearchBar /> : null}
     </>
   );
 };
