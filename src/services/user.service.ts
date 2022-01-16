@@ -4,6 +4,10 @@ import { ApiService } from "./api.service";
 export class UserService {
   static api = ApiService("");
 
+  static getUserProfile(): Promise<IUser> {
+    return this.api.get("/auth/me").then((res) => res.data);
+  }
+
   static signup(user: IUser): Promise<IUser> {
     return this.api.post(`/auth/signup`, user).then((res) => res.data);
   }

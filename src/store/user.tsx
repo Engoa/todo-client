@@ -1,33 +1,44 @@
 import React, { createContext, useContext } from "react";
+import { UserService } from "../services/user.service";
 import { IUser, UserContent } from "../types/User";
 import { useTodosContext } from "./todos";
 
 export const UserContext = createContext<UserContent>({} as UserContent);
 export const useUserContext = () => useContext(UserContext);
 
-export const getUserFromLS = (): IUser => {
-  const user = localStorage.getItem("user");
-  if (user) {
-    return JSON.parse(user);
+export const getTokenFromLS = (): IUser => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    return JSON.parse(token);
   }
   return {} as IUser;
 };
 
 export const UserProvider: React.FC = ({ children }): JSX.Element => {
-  const [user, setUser] = React.useState<IUser>(getUserFromLS() || {});
+  const [user, setUser] = React.useState<IUser>(getTokenFromLS() || {});
   const { todos, setTodos } = useTodosContext();
-  const isLoggedIn = !!user.email && !!user.accessToken;
+  const isLoggedIn = !!localStorage.getItem("accessToken");
 
-  const setToLS = (data: Partial<IUser>) => {
-    localStorage.setItem("user", JSON.stringify(data));
-    return setUser(data);
+  const fetchUser = async () => {
+    if (!isLoggedIn) return;
+    try {
+      const res = await UserService.getUserProfile();
+      setUser(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setToLS = (data: IUser) => {
+    localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+    setUser(data);
   };
 
   const logout = () => {
     setUser({} as IUser);
-    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
     if (todos.length) setTodos([]);
   };
 
-  return <UserContext.Provider value={{ user, setUser: setToLS, logout, isLoggedIn }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, fetchUser, logout, isLoggedIn, setUser, setToLS }}>{children}</UserContext.Provider>;
 };

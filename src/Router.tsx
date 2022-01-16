@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import ProfilePage from "./pages/ProfilePage";
@@ -8,9 +8,13 @@ import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 import { useUserContext } from "./store/user";
 
-export const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const { isLoggedIn } = useUserContext();
+export const RequireAuth: FC = ({ children }: { children: JSX.Element }) => {
+  const { isLoggedIn, fetchUser } = useUserContext();
   let location = useLocation();
+
+  useEffect(() => {
+    fetchUser();
+  }, [location]);
   // if user is not logged in and trying to access home, redirect to auth
   if (!isLoggedIn && !checkRoute(location.pathname)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
