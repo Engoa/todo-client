@@ -9,7 +9,6 @@ import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
 import { tasksAnimations } from "../../animations/animations";
 import AddTodo from "./AddTodo";
-import SearchBar from "../SearchBar/SearchBar";
 import "./Todos.scss";
 interface TodoProps {
   results: ITodo[];
@@ -33,7 +32,6 @@ const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
   return (
     <>
       <AddTodo />
-      {todos.length ? <SearchBar /> : null}
       {
         <div className="todos--wrapper">
           {todos &&
@@ -47,14 +45,14 @@ const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
                       </div>
                       <div className="todos__details--dates">
                         <div className="todos__actions">
-                          <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e, results)}>
+                          <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e)}>
                             <Tooltip title="Finish" TransitionComponent={Zoom} placement="left" arrow>
                               <IconButton size="small">
                                 <DoneIcon />
                               </IconButton>
                             </Tooltip>
                           </div>
-                          <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e, results)}>
+                          <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e)}>
                             <Tooltip title="Delete" TransitionComponent={Zoom} placement="top" arrow>
                               <IconButton size="small">
                                 <ClearIcon />

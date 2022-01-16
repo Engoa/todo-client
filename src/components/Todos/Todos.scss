@@ -25,14 +25,23 @@
     font-size: 1.1rem;
     opacity: 0.7;
     font-weight: lighter;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 3rem;
+    @include media("<smd") {
+      font-size: 0.8rem;
+    }
     .title--headings {
       font-weight: bold;
       text-transform: capitalize;
       color: #e21a24;
     }
 
-    @include media("<smd") {
+    button {
       font-size: 0.8rem;
+      line-height: 1rem;
     }
   }
   &__add {
@@ -136,7 +145,6 @@
         opacity: 0.7;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        color: #e21a24;
         @include media("<smd") {
           font-size: 0.7rem;
         }
@@ -165,7 +173,7 @@
 .todo {
   transition: $transition-250 !important;
   transform: translateX(-100%);
-  opacity: 0.2;
+  opacity: 0;
   filter: blur(5px);
   will-change: background-color;
 }

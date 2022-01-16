@@ -3,10 +3,11 @@ import { TextField, Button } from "@mui/material";
 import { useTodosContext } from "../../store/todos";
 import { useUserContext } from "../../store/user";
 import { ITodo } from "../../types/Todo";
+import SearchBar from "../SearchBar/SearchBar";
 
 const AddTodo: FC = (): JSX.Element => {
   const { user } = useUserContext();
-  const { todos, todoForm, addTodo, handleChange } = useTodosContext();
+  const { todos, todoForm, addTodo, handleChange, finishAll } = useTodosContext();
 
   interface IHandleTitle {
     userName: string;
@@ -38,40 +39,49 @@ const AddTodo: FC = (): JSX.Element => {
     }
   });
   return (
-    <div className="todos__add">
-      <p className="todos__user--title">
-        <HandleTitle userName={user.firstName} />
-      </p>
-      <form className="todos__add__inputs">
-        <div className="input--wrapper">
-          <TextField
-            label="The title of your task"
-            onChange={handleChange("title")}
-            type="text"
-            value={todoForm.title}
-            autoComplete="off"
-            spellCheck={false}
-          />
-          <TextField
-            label="Describe your task"
-            onChange={handleChange("text")}
-            type="text"
-            id="todo-text"
-            value={todoForm.text}
-            autoComplete="off"
-            spellCheck={false}
-          />
+    <>
+      <div className="todos__add">
+        <div className="todos__user--title">
+          <HandleTitle userName={user.firstName} />
+          <div className="todos__complete__all">
+            <Button variant="contained" onClick={finishAll}>
+              Complete All
+            </Button>
+          </div>
         </div>
-        <Button
-          variant="contained"
-          type="submit"
-          onClick={(e: SyntheticEvent) => addTodo(todoForm, e)}
-          disabled={!todoForm.text || !todoForm.title ? true : false}
-        >
-          Add Todo
-        </Button>
-      </form>
-    </div>
+        <form className="todos__add__inputs">
+          <div className="input--wrapper">
+            <TextField
+              label="The title of your task"
+              onChange={handleChange("title")}
+              type="text"
+              value={todoForm.title}
+              autoComplete="off"
+              spellCheck={false}
+              ref={(input) => input && input.focus()}
+            />
+            <TextField
+              label="Describe your task"
+              onChange={handleChange("text")}
+              type="text"
+              id="todo-text"
+              value={todoForm.text}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={(e: SyntheticEvent) => addTodo(todoForm, e)}
+            disabled={!todoForm.text || !todoForm.title ? true : false}
+          >
+            Add Todo
+          </Button>
+        </form>
+      </div>
+      {todos.length ? <SearchBar /> : null}
+    </>
   );
 };
 

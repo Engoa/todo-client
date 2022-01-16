@@ -23,8 +23,7 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    const results = todos.filter((todo) => todo.text.toLowerCase().includes(e.target.value.toLowerCase()));
-    setSearchResults(results);
+    setSearchResults(todos.filter((todo) => todo.title.toLowerCase().includes(e.target.value.toLowerCase())));
   };
 
   const resetSearch = () => {
@@ -39,18 +38,19 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       const res = await TodoService.addTodo(todoForm);
       setTodos([res, ...todos]);
       toggleSnackBar("Task added successfully");
-      resetSearch();
     } catch (err: any) {
       toggleSnackBar("An error occured while adding task");
       console.log(err);
     } finally {
       setTodoForm({ text: "", title: "", completed: false });
+      resetSearch();
     }
   };
-  const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent, arr: ITodo[]) => {
+  const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
     e.stopPropagation();
     try {
-      setTodos(arr.filter((todo) => todo._id !== selectedTodoID));
+      setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
+      setSearchResults(searchResults.filter((todo) => todo._id !== selectedTodoID));
       await TodoService.deleteTodo(selectedTodoID);
       toggleSnackBar("Task deleted successfully");
     } catch (err: any) {
@@ -58,20 +58,33 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       console.log(err);
     }
   };
-  const finishTodo = async (selectedTodoID: string, e: SyntheticEvent, arr: ITodo[]) => {
+  const finishTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
     e.stopPropagation();
-    const selectedTodo = arr.find((todo) => todo._id === selectedTodoID);
-    if (!selectedTodo) return;
+    const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
     try {
       const updatedTodo = {
         ...selectedTodo,
         completed: !selectedTodo.completed,
+        updatedAt: new Date().toISOString(),
       };
-      setTodos(arr.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+      setSearchResults(searchResults.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
       await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
-      toggleSnackBar("Task updated successfully");
+      toggleSnackBar("Task completed successfully");
     } catch (err: any) {
-      toggleSnackBar("An error occured while updating task");
+      toggleSnackBar("An error occured while completing task");
+      console.log(err);
+    }
+  };
+  const finishAll = async () => {
+    if (todos.every((todo) => todo.completed)) return;
+    try {
+      setTodos(todos.map((todo) => ({ ...todo, completed: true, updatedAt: new Date().toISOString() })));
+      setSearchResults(todos.map((todo) => ({ ...todo, completed: true, updatedAt: new Date().toISOString() })));
+      await TodoService.updateAllTodos({ completed: true });
+      toggleSnackBar("All tasks completed successfully");
+    } catch (err: any) {
+      toggleSnackBar("An error occured while completing tasks");
       console.log(err);
     }
   };
@@ -87,6 +100,7 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
         setTodos,
         addTodo,
         finishTodo,
+        finishAll,
         deleteTodo,
         handleChange,
         handleSearch,

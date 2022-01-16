@@ -16,4 +16,7 @@ export class TodoService {
   static updateTodo(id: ITodo["_id"], todo: Partial<ITodo>): Promise<ITodo> {
     return this.api.patch(`/todos/${id}`, todo).then((res) => res.data);
   }
+  static updateAllTodos(todo: Partial<ITodo>): Promise<ITodo> {
+    return this.api.patch(`/todos`, todo).then((res) => res.data);
+  }
 }
