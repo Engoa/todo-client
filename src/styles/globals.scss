@@ -22,10 +22,12 @@ body,
   width: 100%;
   padding: 0 !important;
   overflow-x: hidden;
+  @include media("<smd") {
+    height: 100%;
+  }
 }
 
 :root {
-  height: 100%;
   @include scrollbar;
   overflow-y: scroll !important;
 }
