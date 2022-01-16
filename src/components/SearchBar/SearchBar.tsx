@@ -9,7 +9,7 @@ const SearchBar: FC = (): JSX.Element => {
     <div className="todos__search" style={{ width: "100%" }}>
       <TextField
         style={{ width: "100%" }}
-        label="Search for a task"
+        label="Search for a task description"
         onChange={handleSearch}
         type="text"
         value={searchTerm}

@@ -47,10 +47,10 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       setTodoForm({ text: "", title: "", completed: false });
     }
   };
-  const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
+  const deleteTodo = async (selectedTodoID: string, e: SyntheticEvent, arr: ITodo[]) => {
     e.stopPropagation();
     try {
-      setTodos(todos.filter((todo) => todo._id !== selectedTodoID));
+      setTodos(arr.filter((todo) => todo._id !== selectedTodoID));
       await TodoService.deleteTodo(selectedTodoID);
       toggleSnackBar("Task deleted successfully");
     } catch (err: any) {
@@ -58,16 +58,16 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
       console.log(err);
     }
   };
-  const finishTodo = async (selectedTodoID: string, e: SyntheticEvent) => {
+  const finishTodo = async (selectedTodoID: string, e: SyntheticEvent, arr: ITodo[]) => {
     e.stopPropagation();
-    const selectedTodo = todos.find((todo) => todo._id === selectedTodoID);
+    const selectedTodo = arr.find((todo) => todo._id === selectedTodoID);
     if (!selectedTodo) return;
     try {
       const updatedTodo = {
         ...selectedTodo,
         completed: !selectedTodo.completed,
       };
-      setTodos(todos.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
+      setTodos(arr.map((todo) => (todo._id === selectedTodoID ? updatedTodo : todo)));
       await TodoService.updateTodo(selectedTodoID, { completed: !selectedTodo.completed });
       toggleSnackBar("Task updated successfully");
     } catch (err: any) {

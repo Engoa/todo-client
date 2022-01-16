@@ -9,15 +9,23 @@
   margin: 0;
 }
 
+#root {
+  height: 100%;
+}
+
 body,
 :root {
-  font-family: "Montserrat", sans-serif;
-  font-size: 16px;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 16px !important;
   background: #111114;
   color: white;
   width: 100%;
-  overflow-x: hidden;
   padding: 0 !important;
+  overflow-x: hidden;
+}
+
+:root {
+  overflow-y: scroll !important;
 }
 
 .Layout {
@@ -28,59 +36,4 @@ body,
   margin: auto;
   gap: 1rem;
   padding: 1rem;
-}
-
-a {
-  font-family: $ff-main;
-  color: white;
-  text-decoration: none;
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-button {
-  cursor: pointer;
-  outline: none;
-  border: none;
-}
-
-button,
-input,
-select,
-textarea {
-  margin: 0;
-  font-family: $ff-main;
-}
-
-input,
-select {
-  vertical-align: middle;
-  outline: none;
-  border: none;
-  color: white;
-  &::placeholder {
-    font-family: $ff-main;
-  }
-}
-
-.MuiList-root .MuiMenuItem-root {
-  .MuiListItemIcon-root {
-    svg {
-      will-change: color;
-      * {
-        transition: $transition-250;
-      }
-    }
-  }
-  &:hover {
-    .MuiListItemIcon-root {
-      svg {
-        * {
-          fill: black;
-        }
-      }
-    }
-  }
 }

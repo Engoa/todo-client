@@ -47,14 +47,14 @@ const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
                       </div>
                       <div className="todos__details--dates">
                         <div className="todos__actions">
-                          <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e)}>
+                          <div className="todos__actions__update action" onClick={(e) => finishTodo(todo._id, e, results)}>
                             <Tooltip title="Finish" TransitionComponent={Zoom} placement="left" arrow>
                               <IconButton size="small">
                                 <DoneIcon />
                               </IconButton>
                             </Tooltip>
                           </div>
-                          <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e)}>
+                          <div className="todos__actions__delete action" onClick={(e) => deleteTodo(todo._id, e, results)}>
                             <Tooltip title="Delete" TransitionComponent={Zoom} placement="top" arrow>
                               <IconButton size="small">
                                 <ClearIcon />

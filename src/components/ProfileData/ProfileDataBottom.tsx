@@ -67,9 +67,11 @@ const ProfileDataBottom: FC<IProfileDataBottom> = ({ user, handleChange, userFor
           </div>
         </div>
       </div>
-      <div className="profile__bottom__errors">
-        <UserErrors userErrors={userErrors} />
-      </div>
+      {!userErrors.length ? null : (
+        <div className="profile__bottom__errors">
+          <UserErrors userErrors={userErrors} />
+        </div>
+      )}
       <div className="profile__bottom__logout">
         <Tooltip title="Logout" arrow>
           <IconButton onClick={logout}>

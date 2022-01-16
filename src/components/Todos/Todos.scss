@@ -136,6 +136,7 @@
         opacity: 0.7;
         text-transform: uppercase;
         letter-spacing: 0.04em;
+        color: #e21a24;
         @include media("<smd") {
           font-size: 0.7rem;
         }

@@ -1,0 +1,54 @@
+a {
+  font-family: $ff-main !important;
+  color: white;
+  text-decoration: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  font-family: $ff-main;
+}
+
+input,
+select {
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  color: white;
+  &::placeholder {
+    font-family: $ff-main;
+  }
+}
+
+.MuiList-root .MuiMenuItem-root {
+  .MuiListItemIcon-root {
+    svg {
+      will-change: color;
+      * {
+        transition: $transition-250;
+      }
+    }
+  }
+  &:hover {
+    .MuiListItemIcon-root {
+      svg {
+        * {
+          fill: black;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 @import "node_modules/include-media/dist/_include-media.scss";
 @import "./variables.scss";
+@import "./utils.scss";
 
 $breakpoints: (
   "sm": 20.25em,
