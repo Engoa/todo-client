@@ -17,7 +17,7 @@ export const getTokenFromLS = (): IUser => {
 
 export const UserProvider: React.FC = ({ children }): JSX.Element => {
   const [user, setUser] = React.useState<IUser>(getTokenFromLS() || {});
-  const { todos, setTodos } = useTodosContext();
+  const { todos, setTodos, resetSearch } = useTodosContext();
   const { setLoading } = useLoaderContext();
   const isLoggedIn = !!localStorage.getItem("accessToken");
 
@@ -42,7 +42,10 @@ export const UserProvider: React.FC = ({ children }): JSX.Element => {
   const logout = () => {
     setUser({} as IUser);
     localStorage.removeItem("accessToken");
-    if (todos.length) setTodos([]);
+    if (todos.length) {
+      setTodos([]);
+      resetSearch();
+    }
   };
 
   return <UserContext.Provider value={{ user, fetchUser, logout, isLoggedIn, setUser, setToLS }}>{children}</UserContext.Provider>;

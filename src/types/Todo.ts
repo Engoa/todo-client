@@ -23,4 +23,5 @@ export type TodoContent = {
   finishAll: () => void;
   handleChange: (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  resetSearch: () => void;
 };

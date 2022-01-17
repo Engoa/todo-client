@@ -110,6 +110,8 @@ const theme: ThemeOptions = {
           overflow: "hidden",
           borderTop: "2px solid #e50914",
           fontFamily: "Montserrat",
+          textTransform: "lowercase",
+          fontWeight: "light",
         },
       },
     },

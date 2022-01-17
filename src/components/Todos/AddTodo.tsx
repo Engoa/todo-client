@@ -46,7 +46,7 @@ const AddTodo: FC = (): JSX.Element => {
           <HandleTitle userName={user?.firstName?.toLowerCase()} />
           {isMobile ? null : (
             <div className="todos__complete__all">
-              <Button variant="contained" onClick={finishAll}>
+              <Button variant="contained" onClick={finishAll} disabled={todos.every((todo) => todo.completed)}>
                 Complete All
               </Button>
             </div>

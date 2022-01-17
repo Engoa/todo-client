@@ -96,6 +96,7 @@ export const TodosProvider: React.FC = ({ children }): JSX.Element => {
         todoForm,
         searchTerm,
         searchResults,
+        resetSearch,
         setSearchTerm,
         setTodos,
         addTodo,
