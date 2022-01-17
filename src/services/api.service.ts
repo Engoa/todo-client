@@ -1,15 +1,14 @@
 import axios from "axios";
-import { getTokenFromLS } from "../store/user";
+import { getUserFromLS } from "../store/user";
 
 export const ApiService = (url: string) => {
   const instance = axios.create({ baseURL: `${import.meta.env.VITE_BASEURL}${url}` });
 
   instance.interceptors.request.use((request: any) => {
-    const token = getTokenFromLS();
-    const isLoggedIn = token !== null;
+    const user = getUserFromLS();
 
-    if (token && isLoggedIn) {
-      request.headers.common.Authorization = `Bearer ${token}`;
+    if (user) {
+      request.headers.common.Authorization = `Bearer ${user.accessToken}`;
     }
     return request;
   });

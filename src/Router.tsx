@@ -7,20 +7,16 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 import { useUserContext } from "./store/user";
-import { useTodosContext } from "./store/todos";
 
 export const RequireAuth: FC = ({ children }: { children: JSX.Element }) => {
-  const { isLoggedIn, fetchUser, user } = useUserContext();
-  const { todos } = useTodosContext();
+  const { isLoggedIn } = useUserContext();
   let location = useLocation();
 
-  useEffect(() => {
-    fetchUser();
-  }, [location]);
   // if user is not logged in and trying to access home, redirect to auth
   if (!isLoggedIn && !checkRoute(location.pathname)) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+
   // If user tries to access login or register page while logged in, redirect to home
   else if (isLoggedIn && checkRoute(location.pathname)) {
     return <Navigate to="/" state={{ from: location }} replace />;

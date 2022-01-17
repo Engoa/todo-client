@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Register: FC<Props> = (): JSX.Element => {
-  const { user, setToLS } = useUserContext();
+  const { user, saveUser } = useUserContext();
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
   const { validateSchemes, setUserErrors, userErrors } = useErrors();
@@ -32,7 +32,7 @@ const Register: FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       const res = await UserService.signup(userForm);
-      setToLS(res);
+      saveUser(res);
       toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, you've successfully registered!`);
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);

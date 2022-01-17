@@ -4,12 +4,8 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
-  z-index: 5;
-  position: absolute;
-  bottom: 0.3rem;
-  left: 50%;
-  transform: translateX(-50%);
-
+  z-index: 9999;
+  padding: 1rem;
   a {
     transition: $transition-350;
   }

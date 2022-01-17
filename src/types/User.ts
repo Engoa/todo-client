@@ -16,8 +16,9 @@ export type ISignup = {
 export type UserContent = {
   user: IUser;
   isLoggedIn: {} | IUser;
+  isUserInit: boolean;
   fetchUser: () => void;
   logout: () => void;
-  setToLS: (user: IUser) => void;
-  setUser: (user: IUser) => void;
+  mergeUser: (user: IUser) => void;
+  saveUser: (user: IUser) => void;
 };

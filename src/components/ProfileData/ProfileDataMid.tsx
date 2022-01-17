@@ -3,13 +3,16 @@ import { IconButton, Avatar, Zoom, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { IUser } from "../../types/User";
+import { useUserContext } from "../../store/user";
 
 interface IProfileDataMid {
-  user: IUser;
   profilePageRef: React.RefObject<HTMLDivElement>;
   toggleModalHandler: () => void;
 }
-const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandler, user }): JSX.Element => {
+const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandler }): JSX.Element => {
+  const { user } = useUserContext();
+  const fullName = user.firstName + user.lastName;
+
   return (
     <>
       <div className="profile__mid" ref={profilePageRef}>
@@ -26,7 +29,7 @@ const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandle
 
         <div className="profile__mid__user">
           <div className="profile__mid__user--name">
-            <span>{`${user?.firstName?.toLowerCase()} ${user?.lastName?.toLowerCase()}`}</span>
+            <span>{fullName.toString().toLowerCase()}</span>
           </div>
           <div className="profile__mid__user--country">
             <LocationOnIcon fontSize="inherit" />

@@ -12,7 +12,7 @@ import useErrors from "../hooks/useErrors";
 import UserErrors from "../components/UserErrors/UserErrors";
 
 const Login = (): JSX.Element => {
-  const { user, setToLS } = useUserContext();
+  const { user, saveUser } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>({
     email: "",
     password: "",
@@ -31,7 +31,7 @@ const Login = (): JSX.Element => {
     try {
       setLoading(true);
       const res = await UserService.login(userForm);
-      setToLS(res);
+      saveUser(res);
       toggleSnackBar(`Hi ${capitilizeFirstLetter(res.firstName)}, It's good to have you back!`);
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);

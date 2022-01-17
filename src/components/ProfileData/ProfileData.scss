@@ -57,6 +57,7 @@
     justify-content: center;
     gap: 2rem;
     width: 100%;
+    flex-wrap: wrap;
     will-change: transform;
     @include media("<smd") {
       gap: 1rem;

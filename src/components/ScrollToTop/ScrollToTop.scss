@@ -14,8 +14,6 @@
   }
 
   @include media("<xxl") {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 1rem;
+    bottom: 0.5rem;
   }
 }

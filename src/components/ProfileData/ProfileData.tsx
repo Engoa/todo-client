@@ -15,7 +15,7 @@ import ProfileDataTop from "./ProfileDataTop";
 import "./ProfileData.scss";
 
 const ProfileData: FC = (): JSX.Element => {
-  const { user, setUser, logout } = useUserContext();
+  const { user, saveUser, logout } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>(user);
   const { setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
@@ -38,7 +38,7 @@ const ProfileData: FC = (): JSX.Element => {
       const updatedFields = differenceBetweenObjects(userForm, user);
       await UserService.updateUser(user._id, updatedFields);
       const updatedUser = Object.assign(user, updatedFields);
-      setUser(updatedUser);
+      saveUser(updatedUser);
       toggleSnackBar("User updated successfully");
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
@@ -51,8 +51,8 @@ const ProfileData: FC = (): JSX.Element => {
   const deleteUserHandler = async () => {
     try {
       setLoading(true);
-      await UserService.deleteUser(user._id);
       logout();
+      await UserService.deleteUser(user._id);
       toggleSnackBar("User deleted successfully");
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
@@ -67,7 +67,7 @@ const ProfileData: FC = (): JSX.Element => {
       const { email, ...rest } = user;
       const updatedUser = { ...rest, avatar: avatar };
       await UserService.updateUserImage(user._id, updatedUser);
-      setUser({ ...updatedUser, email });
+      saveUser({ ...updatedUser, email });
       toggleSnackBar("User avatar updated successfully");
     } catch (err: any) {
       if (!!err.response) setUserErrors([err.response.data.message]);
@@ -94,7 +94,7 @@ const ProfileData: FC = (): JSX.Element => {
     <>
       <ProfileDataTop deleteUserHandler={deleteUserHandler} />
       <section className="mid__bottom__wrapper">
-        <ProfileDataMid profilePageRef={profilePageRef} toggleModalHandler={toggleModalHandler} user={user} />
+        <ProfileDataMid profilePageRef={profilePageRef} toggleModalHandler={toggleModalHandler} />
         <ProfileDataBottom
           user={user}
           handleChange={handleChange}

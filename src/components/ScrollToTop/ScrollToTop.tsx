@@ -14,7 +14,7 @@ const ScrollToTop: FC = (): JSX.Element => {
   };
 
   const toggleVisibility = () => {
-    if (window.scrollY > 400) setIsVisible(true);
+    if (window.scrollY > 350) setIsVisible(true);
     else setIsVisible(false);
   };
 
