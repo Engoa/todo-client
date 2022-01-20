@@ -22,7 +22,6 @@ export const UserProvider: React.FC = ({ children }): JSX.Element => {
   const [user, setUser] = React.useState<IUser>(getUserFromLS());
   const { todos, setTodos, resetSearch } = useTodosContext();
   const { setLoading } = useLoaderContext();
-  const [isUserInit, setIsUserInit] = React.useState(false);
   const { toggleSnackBar } = useSnackBarContext();
 
   const isLoggedIn: boolean = !!localStorage.getItem("user");
@@ -31,16 +30,14 @@ export const UserProvider: React.FC = ({ children }): JSX.Element => {
     if (!isLoggedIn) return;
     try {
       setLoading(true);
-      await UserService.getUserProfile().then(mergeUser);
+      const res = await UserService.getUserProfile();
+      mergeUser(res);
     } catch (error) {
-      if (error.code === 401) logout();
-      else {
-        toggleSnackBar("An error occured, please try again later");
-        console.error(error);
-      }
+      logout();
+      toggleSnackBar("An error occured, please try again later");
+      console.error(error);
     } finally {
       setLoading(false);
-      setIsUserInit(true);
     }
   };
 
@@ -69,5 +66,5 @@ export const UserProvider: React.FC = ({ children }): JSX.Element => {
     }
   };
 
-  return <UserContext.Provider value={{ user, fetchUser, logout, isLoggedIn, saveUser, mergeUser, isUserInit }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, fetchUser, logout, isLoggedIn, saveUser, mergeUser }}>{children}</UserContext.Provider>;
 };

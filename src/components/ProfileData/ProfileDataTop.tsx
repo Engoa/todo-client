@@ -25,7 +25,7 @@ const ProfileDataTop: FC<IProfileDataTop> = ({ deleteUserHandler }): JSX.Element
     <>
       <section className="profile__top">
         <Tooltip title="Go Back" arrow TransitionComponent={Zoom}>
-          <IconButton onClick={() => navigate(-1)}>
+          <IconButton onClick={() => navigate("/")}>
             <ChevronLeftIcon className="profile__top__backicon" />
           </IconButton>
         </Tooltip>

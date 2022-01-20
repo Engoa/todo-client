@@ -10,7 +10,7 @@ interface IApp {
   children?: JSX.Element;
 }
 const App: FC<IApp> = ({ children }): JSX.Element => {
-  const { fetchUser, isUserInit } = useUserContext();
+  const { fetchUser } = useUserContext();
 
   useEffect(() => {
     fetchUser();
