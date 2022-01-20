@@ -16,13 +16,16 @@ const Todos: FC = (): JSX.Element => {
   const fetchTodos = async () => {
     try {
       setLoading(true);
-      await TodoService.getTodos().then(setTodos);
+      const res = await TodoService.getTodos();
+      // store.dispatch(fetchAllTodos(res));
+      setTodos(res);
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <>
       <main className="layout--wrapper">

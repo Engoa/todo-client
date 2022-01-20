@@ -7,15 +7,12 @@ export class UserService {
   static getUserProfile(): Promise<IUser> {
     return this.api.get("/auth/me").then((res) => res.data);
   }
-
   static signup(user: IUser): Promise<IUser> {
     return this.api.post(`/auth/signup`, user).then((res) => res.data);
   }
-
   static login(user: IUser): Promise<IUser> {
     return this.api.post(`/auth/login`, user).then((res) => res.data);
   }
-
   static updateUser(userId: IUser, user: IUser): Promise<IUser> {
     return this.api.patch(`/users/${userId}`, user).then((res) => res.data);
   }

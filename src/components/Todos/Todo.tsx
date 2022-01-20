@@ -3,7 +3,6 @@ import { Accordion, AccordionDetails, AccordionSummary, IconButton, TextField, T
 import { ExpandMoreRounded } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
-// import EditIcon from "@mui/icons-material/Edit";
 import dayjs from "dayjs";
 import { useTodosContext } from "../../store/todos";
 import { ITodo } from "../../types/Todo";
@@ -59,13 +58,6 @@ const Todo: FC<TodoProps> = ({ results }): JSX.Element => {
                               </IconButton>
                             </Tooltip>
                           </div>
-                          {/* <div className="todos__actions__edit action">
-                            <Tooltip title="Edit" TransitionComponent={Zoom} placement="right" arrow>
-                              <IconButton size="small">
-                                <EditIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </div> */}
                         </div>
                         <div className="todos__details--date">
                           <Typography>
