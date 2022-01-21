@@ -10,8 +10,11 @@ import { useSnackBarContext } from "../store/snackbar";
 import { capitilizeFirstLetter } from "../helpers/utils";
 import useErrors from "../hooks/useErrors";
 import UserErrors from "../components/UserErrors/UserErrors";
+import { useTitle } from "../hooks/useTitle";
 
 const Login = (): JSX.Element => {
+  useTitle("Do It - Login");
+
   const { user, saveUser } = useUserContext();
   const [userForm, setUserForm] = React.useState<IUser>({
     email: "",

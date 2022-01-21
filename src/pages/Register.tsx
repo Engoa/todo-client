@@ -10,12 +10,15 @@ import { useSnackBarContext } from "../store/snackbar";
 import { capitilizeFirstLetter } from "../helpers/utils";
 import useErrors from "../hooks/useErrors";
 import UserErrors from "../components/UserErrors/UserErrors";
+import { useTitle } from "../hooks/useTitle";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const Register: FC<Props> = (): JSX.Element => {
+  useTitle("Do It - Register");
+
   const { user, saveUser } = useUserContext();
   const { loading, setLoading } = useLoaderContext();
   const { toggleSnackBar } = useSnackBarContext();
@@ -64,7 +67,7 @@ const Register: FC<Props> = (): JSX.Element => {
           <div className="auth__input">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Country</InputLabel>
-              <Select value={userForm.country ?? ""} onChange={handleChange("country")} label="Country">
+              <Select value={userForm?.country ?? ""} onChange={handleChange("country")} label="Country">
                 {arrayOfCountries.map((country) => (
                   <MenuItem key={country.code} value={country.name}>
                     {country.name}
