@@ -11,7 +11,7 @@ interface IProfileDataMid {
 }
 const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandler }): JSX.Element => {
   const { user } = useUserContext();
-  const fullName = user.firstName + user.lastName;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <>
