@@ -103,10 +103,12 @@
       p {
         font-size: 1rem;
         letter-spacing: 0.055em;
-        text-transform: capitalize;
         max-width: 1000px;
         @include media("<smd") {
           max-width: 100px;
+        }
+        &::first-letter {
+          text-transform: capitalize;
         }
       }
     }
