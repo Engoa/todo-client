@@ -32,8 +32,8 @@ const ProfileDataMid: FC<IProfileDataMid> = ({ profilePageRef, toggleModalHandle
             <span>{fullName.toString().toLowerCase()}</span>
           </div>
           <div className="profile__mid__user--country">
-            <LocationOnIcon fontSize="inherit" />
             <span>{user.country}</span>
+            <LocationOnIcon fontSize="inherit" />
           </div>
         </div>
       </div>

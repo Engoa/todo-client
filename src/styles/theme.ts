@@ -68,7 +68,7 @@ const theme: ThemeOptions = {
           color: "white",
           fontFamily: "Montserrat",
           ":hover": {
-            background: "#ad2027",
+            background: "#89050b",
             color: "black",
           },
         },

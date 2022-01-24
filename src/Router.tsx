@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
+import React, { FC } from "react";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import ProfilePage from "./pages/ProfilePage";
 import { checkRoute } from "./helpers/utils";
@@ -29,20 +29,18 @@ const Router: FC = ({ children }) => {
   const { isLoggedIn } = useUserContext();
 
   return (
-    <BrowserRouter>
-      <RequireAuth>
-        <Routes>
-          <Route path="/">
-            {isLoggedIn && <Route path="/" element={<Layout />} />}
-            {isLoggedIn && <Route path="profile" element={<ProfilePage />} />}
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="*" element={<PageNotFound />} />
-            {children}
-          </Route>
-        </Routes>
-      </RequireAuth>
-    </BrowserRouter>
+    <RequireAuth>
+      <Routes>
+        <Route path="/">
+          {isLoggedIn && <Route path="/" element={<Layout />} />}
+          {isLoggedIn && <Route path="profile" element={<ProfilePage />} />}
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="*" element={<PageNotFound />} />
+          {children}
+        </Route>
+      </Routes>
+    </RequireAuth>
   );
 };
 

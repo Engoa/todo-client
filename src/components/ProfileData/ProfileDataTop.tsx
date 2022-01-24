@@ -39,7 +39,6 @@ const ProfileDataTop: FC<IProfileDataTop> = ({ deleteUserHandler }): JSX.Element
 
       <>
         <Menu
-          className="delete__user"
           anchorEl={anchorEl}
           id="account-menu"
           open={menuOpen}
@@ -47,7 +46,7 @@ const ProfileDataTop: FC<IProfileDataTop> = ({ deleteUserHandler }): JSX.Element
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem onClick={deleteUserHandler}>
+          <MenuItem onClick={deleteUserHandler} className="delete__user">
             <ListItemIcon>
               <PersonRemoveIcon fontSize="small" />
             </ListItemIcon>
