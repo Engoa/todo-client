@@ -21,7 +21,7 @@ const SimpleSnackBar: FC = (): JSX.Element => {
   );
   return (
     <div>
-      <Snackbar open={openSnackBar} autoHideDuration={4000} onClose={handleClose} message={message} action={action} />
+      <Snackbar open={openSnackBar} autoHideDuration={3000} onClose={handleClose} message={message} action={action} />
     </div>
   );
 };
